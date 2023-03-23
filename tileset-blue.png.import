@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vf5c1oy8v4wl"
-path="res://.godot/imported/lightgold_normal-ogl.png-12d34a2999b9e214697353cedec76392.ctex"
+uid="uid://ckmbmsby018k1"
+path="res://.godot/imported/tileset-blue.png-bec23f07f9313ebc92ab3e0d8b52ea2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lightgold_normal-ogl.png"
-dest_files=["res://.godot/imported/lightgold_normal-ogl.png-12d34a2999b9e214697353cedec76392.ctex"]
+source_file="res://tileset-blue.png"
+dest_files=["res://.godot/imported/tileset-blue.png-bec23f07f9313ebc92ab3e0d8b52ea2e.ctex"]
 
 [params]
 
