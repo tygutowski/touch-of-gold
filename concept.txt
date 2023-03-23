@@ -1,0 +1,43 @@
+player controller
+
+
+world
+
+
+levels
+1. normal platforming level, where each tile touched turns to gold. 
+objective: reach the goal 
+2. level with enemies that walk left and right on platforms. player must take contact damage 
+from the upper enemy, turn it to gold, and drop it on the bottom enemy. 
+objective: kill all enemies 
+3. waterfall level, where logs flow down the waterfall quickly. touching the logs turns them into gold, 
+freezing them in place. 
+objective: reach the goal 
+4. level where you must hold down a button to open a door. there are "weak" tiles on the ground that will 
+instantly break if a gold block touches them. this means the player must push a non-gold block while touching 
+a single gold block. PGNNNN-> 
+objective: reach the goal 
+5. two electrical nodes must be connected to open a door. the player must connect the nodes via gold, because 
+gold is conductive. 
+goal: open the door 
+6. two electrical nodes must be connected to open a door, then another two to electrocute enemies. 
+goal: kill the enemies 
+7. There are two types of buttons. One button requires heavy tiles to weigh it down, the other requires medium 
+tiles. The player must put gold blocks on the heavy tiles, and wooden crates on the loght tiles. 
+8. 
+
+menu
+
+
+options
+
+
+level select
+
+
+music
+
+
+hidden stats:
+percentage of blocks goldified
+time
