@@ -16,6 +16,7 @@ func _physics_process(delta):
 			var tile_to_swap = tilemap.get_cell_atlas_coords(0, tile)
 			if tile_to_swap != Vector2i(-1, -1):
 				tilemap.set_cell(0, tile, 1, tile_to_swap)
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
