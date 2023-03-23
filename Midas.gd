@@ -9,13 +9,21 @@ var gravity = 500
 
 
 func _physics_process(delta):
+	# the tile the player is currently at. takes the transform and divides by the tile size (8)
 	var player_tile = get_global_transform().origin / 8
-	if tilemap.get_cell_atlas_coords(0, player_tile) == Vector2i(-1, -1):
-		var tiles_to_change = [Vector2i(player_tile.x+1, player_tile.y), Vector2i(player_tile.x-1, player_tile.y), Vector2i(player_tile.x, player_tile.y+1), Vector2i(player_tile.x, player_tile.y-1)]
-		for tile in tiles_to_change:
-			var tile_to_swap = tilemap.get_cell_atlas_coords(0, tile)
-			if tile_to_swap != Vector2i(-1, -1):
-				tilemap.set_cell(0, tile, 1, tile_to_swap)
+
+	# list of tiles above, below, left and right of the player
+	var tiles_to_change = [Vector2i(player_tile.x+1, player_tile.y), Vector2i(player_tile.x-1, player_tile.y), Vector2i(player_tile.x, player_tile.y+1), Vector2i(player_tile.x, player_tile.y-1)]
+	# go through all tiles listed above
+	for tile in tiles_to_change:
+		
+		var tile_to_swap = tilemap.get_cell_atlas_coords(0, tile)
+		if tile_to_swap != Vector2i(-1, -1):
+			tilemap.set_cell(0, tile, 1, tile_to_swap)
+
+	
+	if tilemap.get_cell_atlas_coords(1, Vector2i(player_tile.x, player_tile.y)) != Vector2i(-1, -1):
+		tilemap.set_cell(1, Vector2i(player_tile.x, player_tile.y), 4, tilemap.get_cell_atlas_coords(1, Vector2i(player_tile.x, player_tile.y)))
 	
 	# Add the gravity.
 	if not is_on_floor():

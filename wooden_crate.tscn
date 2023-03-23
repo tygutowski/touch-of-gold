@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cia0qsxwatmau"]
+
+[ext_resource type="Texture2D" uid="uid://ch8f28jruh7oc" path="res://wooden-crate.png" id="1_woisc"]
+
+[node name="Wooden Crate" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1, 1.01754)
+texture = ExtResource("1_woisc")
