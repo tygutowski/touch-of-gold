@@ -11,6 +11,12 @@ config_version=5
 [application]
 
 config/name="April Fool's Jam"
-run/main_scene="res://World.tscn"
+run/main_scene="res://Level1.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=192
+window/size/viewport_height=108
+window/stretch/mode="viewport"
