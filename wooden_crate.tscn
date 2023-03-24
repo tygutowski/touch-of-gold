@@ -1,10 +1,56 @@
-[gd_scene load_steps=2 format=3 uid="uid://cia0qsxwatmau"]
+[gd_scene load_steps=8 format=3 uid="uid://cia0qsxwatmau"]
 
+[ext_resource type="Script" path="res://wooden_crate.gd" id="1_53rtd"]
 [ext_resource type="Texture2D" uid="uid://ch8f28jruh7oc" path="res://wooden-crate.png" id="1_woisc"]
+[ext_resource type="Texture2D" uid="uid://dm4o1kclxtvoj" path="res://golden-crate.png" id="2_psn2m"]
 
-[node name="Wooden Crate" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1p3lh"]
+size = Vector2(9, 9)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbucs"]
+size = Vector2(7.8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ra3gk"]
+size = Vector2(1, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gcapi"]
+size = Vector2(1, 8)
+
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["crate"]]
+script = ExtResource("1_53rtd")
+
+[node name="GoldSprite" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(1, 1.01754)
+texture = ExtResource("2_psn2m")
+
+[node name="WoodSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(1, 1.01754)
 texture = ExtResource("1_woisc")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_1p3lh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lbucs")
+
+[node name="LeftArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea2D"]
+position = Vector2(-4.5, 0)
+shape = SubResource("RectangleShape2D_ra3gk")
+
+[node name="RightArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArea2D"]
+position = Vector2(4.5, 0)
+shape = SubResource("RectangleShape2D_gcapi")
+
+[connection signal="body_entered" from="Area2D" to="." method="GOLDAREAYUESYES"]
+[connection signal="body_entered" from="LeftArea2D" to="." method="_on_left_area_2d_body_entered"]
+[connection signal="body_exited" from="LeftArea2D" to="." method="_on_left_area_2d_body_exited"]
+[connection signal="body_entered" from="RightArea2D" to="." method="_on_right_area_2d_body_entered"]
+[connection signal="body_exited" from="RightArea2D" to="." method="_on_right_area_2d_body_exited"]

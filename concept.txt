@@ -24,7 +24,9 @@ goal: open the door
 goal: kill the enemies 
 7. There are two types of buttons. One button requires heavy tiles to weigh it down, the other requires medium 
 tiles. The player must put gold blocks on the heavy tiles, and wooden crates on the loght tiles. 
-8. 
+8. scale level where player must get proper value of weight to get to the top
+
+gold crates crush wooden crate
 
 menu
 
