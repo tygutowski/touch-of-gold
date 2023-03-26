@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddinqek8y0uar"
-path="res://.godot/imported/gate.png-a12930027a89789f88c7372eae9b4450.ctex"
+uid="uid://cskwite4rvc6n"
+path="res://.godot/imported/mountains close.png-43a273c0421e47fb9ad0afcf64e7524d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gate.png"
-dest_files=["res://.godot/imported/gate.png-a12930027a89789f88c7372eae9b4450.ctex"]
+source_file="res://Parallax/mountains close.png"
+dest_files=["res://.godot/imported/mountains close.png-43a273c0421e47fb9ad0afcf64e7524d.ctex"]
 
 [params]
 

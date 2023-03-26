@@ -6,22 +6,23 @@ func _ready():
 	$"Button-pusher".texture = load("res://Sprites/button-pusher.png")
 	
 func _on_area_2d_body_entered(body):
-	if (body.is_in_group("midas") or body.is_in_group("crate")) && !is_down:
-		pop(body)
+	if (body.is_in_group("midas") or body.is_in_group("crate")):
+		push(body)
 
 func _on_area_2d_body_exited(body):
-	if (body.is_in_group("midas") or body.is_in_group("crate")) && is_down:
-		push(body)
+	if (body.is_in_group("midas") or body.is_in_group("crate")):
+		pop(body)
 
 func _on_area_2d_2_body_entered(body):
 	if body.is_in_group("midas"):
 		$"Button-pusher".texture = load("res://Sprites/button-pusher-gold.png")
 
-func pop(item):
+func push(item):
 	if things_pushing_crate.is_empty():
 		$AnimationPlayer.play("go down")
 	things_pushing_crate.append(item)
-func push(item):
+
+func pop(item):
 	things_pushing_crate.erase(item)
 	if things_pushing_crate.is_empty():
 		$AnimationPlayer.play("go up")

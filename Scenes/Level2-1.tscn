@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="1_xotr1"]
 [ext_resource type="TileSet" uid="uid://d4gm3qh0g0638" path="res://Resources/Tilemap.tres" id="2_wkd3e"]
 [ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/wooden_crate.tscn" id="3_wgknb"]
-[ext_resource type="Material" path="res://Resources/Godray Material.tres" id="4_psysr"]
+[ext_resource type="Material" uid="uid://8yf5jubtmrm8" path="res://Resources/Godray Material.tres" id="4_psysr"]
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="5_uk1vb"]
 [ext_resource type="PackedScene" uid="uid://6vvx7lqd6iam" path="res://Scenes/Button.tscn" id="6_e4br7"]
-[ext_resource type="PackedScene" uid="uid://7gjgqhpwic2x" path="res://Scenes/Gate.tscn" id="7_4qwlg"]
+[ext_resource type="PackedScene" uid="uid://dgs0b6egrwal3" path="res://Scenes/Gate.tscn" id="7_4qwlg"]
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="8_3s3sg"]
 
 [node name="Level" type="Node2D"]

@@ -1,14 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://6vvx7lqd6iam"]
+[gd_scene load_steps=9 format=3 uid="uid://6vvx7lqd6iam"]
 
 [ext_resource type="Script" path="res://Scripts/Button.gd" id="1_t25gq"]
 [ext_resource type="Texture2D" uid="uid://brv557lqug1sh" path="res://Sprites/button-pusher.png" id="2_roq5q"]
 [ext_resource type="Texture2D" uid="uid://bdsqkhsohle8x" path="res://Sprites/button-base.png" id="3_v3rdr"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkg83"]
-size = Vector2(2, 8)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1m76"]
-size = Vector2(8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vso6e"]
 size = Vector2(7, 6)
@@ -32,44 +26,41 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StaticBody2D2/CollisionShape2D2:position")
+tracks/1/path = NodePath(".:is_down")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-1, 0), Vector2(6, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:is_down")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.02),
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"open_gate"
 }]
 }
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cfrnv"]
-size = Vector2(2, 8)
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StaticBody2D2/CollisionPolygon2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-3, 0), Vector2(3, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_3ushl"]
 resource_name = "go up"
@@ -82,7 +73,7 @@ tracks/0/path = NodePath("Button-pusher:region_rect")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.09),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Rect2(-2, 0, 8, 8), Rect2(4, 0, 8, 8)]
@@ -90,47 +81,23 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StaticBody2D2/CollisionShape2D2:shape")
+tracks/1/path = NodePath("StaticBody2D2/CollisionPolygon2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [SubResource("RectangleShape2D_cfrnv"), SubResource("RectangleShape2D_y1m76")]
+"update": 0,
+"values": [Vector2(3, 0), Vector2(-3, 0)]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("StaticBody2D2/CollisionShape2D2:position")
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.09, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(3, 0), Vector2(-3, 0), Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:is_down")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.02),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -149,6 +116,7 @@ size = Vector2(7.5, 8.5)
 
 [node name="Button" type="Node2D"]
 script = ExtResource("1_t25gq")
+is_down = true
 
 [node name="Button-pusher" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -166,15 +134,16 @@ texture = ExtResource("3_v3rdr")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 rotation = 1.57079
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(3, 0)
-shape = SubResource("RectangleShape2D_tkg83")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1.99999, 2.00001, 2.00001, -1.99999, 4.00003, -3.99997, 3.99997, 4.00003)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 rotation = 1.57079
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2"]
-shape = SubResource("RectangleShape2D_y1m76")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+position = Vector2(-3, 0)
+polygon = PackedVector2Array(4.99999, 2.00001, -1.26362e-05, 1.99998, 1.26362e-05, -2.00002, 5.00001, -1.99999)
+disabled = true
 
 [node name="Area2D" type="Area2D" parent="."]
 rotation = 1.57079
@@ -192,7 +161,7 @@ libraries = {
 rotation = 1.57079
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(-0.5, 0)
+position = Vector2(-1, -6.07967e-06)
 shape = SubResource("RectangleShape2D_f4ijw")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

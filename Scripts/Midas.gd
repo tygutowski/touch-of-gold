@@ -12,20 +12,20 @@ var crate = null
 var pushing_and_moving = false
 func _physics_process(delta):
 	# the tile the player is currently at. takes the transform and divides by the tile size (8)
-	var player_tile = get_global_transform().origin / 8
+	var player_tile = get_node("gold point").get_global_transform().origin / 8
 
 	# list of tiles above, below, left and right of the player
-	var tiles_to_change = [Vector2i(player_tile.x+1, player_tile.y), Vector2i(player_tile.x-1, player_tile.y), Vector2i(player_tile.x, player_tile.y+1), Vector2i(player_tile.x, player_tile.y-1)]
+	var tiles_to_change = [Vector2i(player_tile.x+1, player_tile.y), Vector2i(player_tile.x-1, player_tile.y), Vector2i(player_tile.x, player_tile.y+1), Vector2i(player_tile.x, player_tile.y-1), Vector2i(player_tile.x+1, player_tile.y+1), Vector2i(player_tile.x+1, player_tile.y-1), Vector2i(player_tile.x-1, player_tile.y-1), Vector2i(player_tile.x-1, player_tile.y+1)]
 	# go through all tiles listed above
 	for tile in tiles_to_change:
-		if tilemap.get_cell_source_id(0, tile) != 999:
+		if tilemap.get_cell_source_id(0, tile) != 999 && tilemap.get_cell_source_id(0, tile) != 1:
 			var tile_to_swap = tilemap.get_cell_atlas_coords(0, tile)
 			if tile_to_swap != Vector2i(-1, -1):
 				tilemap.set_cell(0, tile, 1, tile_to_swap)
-	
-	if tilemap.get_cell_atlas_coords(1, Vector2i(player_tile.x, player_tile.y)) != Vector2i(-1, -1):
-		tilemap.set_cell(1, Vector2i(player_tile.x, player_tile.y), 4, tilemap.get_cell_atlas_coords(1, Vector2i(player_tile.x, player_tile.y)))
-	
+				Stats.blocks_goldified += 1
+		if tilemap.get_cell_atlas_coords(1, tile) != Vector2i(-1, -1):
+			tilemap.set_cell(1, tile, 1, tilemap.get_cell_atlas_coords(1, tile))
+			Stats.blocks_goldified += 1
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY

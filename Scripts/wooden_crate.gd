@@ -25,9 +25,9 @@ func _physics_process(delta):
 	elif midas_on_right && direction < 0:
 		push_box(-20)
 	elif midas_on_left and being_pulled:
-		push_box(-20)
+		push_box(-35)
 	elif midas_on_right and being_pulled:
-		push_box(20)
+		push_box(35)
 	# if a crate on the left is pushing to the right
 	if crate_on_left && direction > 0:
 		push_box(20)

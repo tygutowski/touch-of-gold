@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://vyl5mvnxw416"]
+
+[ext_resource type="Texture2D" uid="uid://nvk3hbg687vi" path="res://Parallax/mountains bg.png" id="1_exdtx"]
+[ext_resource type="Texture2D" uid="uid://ck866cc32gh8" path="res://Parallax/mountains far.png" id="2_a447o"]
+[ext_resource type="Texture2D" uid="uid://op7njqnruhhu" path="res://Parallax/mountains mid.png" id="3_fwxql"]
+[ext_resource type="Texture2D" uid="uid://cskwite4rvc6n" path="res://Parallax/mountains close.png" id="4_un82o"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture_filter = 1
+texture = ExtResource("1_exdtx")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer2"]
+texture_filter = 1
+texture = ExtResource("2_a447o")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer3"]
+texture_filter = 1
+texture = ExtResource("3_fwxql")
+centered = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer4"]
+texture_filter = 1
+texture = ExtResource("4_un82o")
+centered = false
