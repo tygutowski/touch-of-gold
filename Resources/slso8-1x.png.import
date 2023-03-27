@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c57jd5uhp5h5i"
-path="res://.godot/imported/31-palette.png-2e1fa08b5d47aa3057309a9a2f6cc9bc.ctex"
+uid="uid://fjwa57rnq5gq"
+path="res://.godot/imported/slso8-1x.png-b490e73004750253378267b455fcb206.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/31-palette.png"
-dest_files=["res://.godot/imported/31-palette.png-2e1fa08b5d47aa3057309a9a2f6cc9bc.ctex"]
+source_file="res://Resources/slso8-1x.png"
+dest_files=["res://.godot/imported/slso8-1x.png-b490e73004750253378267b455fcb206.ctex"]
 
 [params]
 
