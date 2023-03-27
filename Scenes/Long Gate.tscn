@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://h6647afbl1ld"]
+
+[ext_resource type="Script" path="res://Scenes/Long Gate.gd" id="1_vcpfm"]
+[ext_resource type="Texture2D" uid="uid://cldgl4e50af51" path="res://Sprites/long-gate.png" id="2_qwkyf"]
+
+[sub_resource type="Animation" id="Animation_igcyf"]
+resource_name = "go down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tdxp1"]
+resource_name = "go up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 2,
+"values": [Vector2(0, -22)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8m8dn"]
+_data = {
+"go down": SubResource("Animation_igcyf"),
+"go up": SubResource("Animation_tdxp1")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7grs"]
+size = Vector2(8, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kilw6"]
+size = Vector2(10, 26)
+
+[node name="Gate anchor" type="Node2D" groups=["gate"]]
+z_index = -1
+script = ExtResource("1_vcpfm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Gate")
+libraries = {
+"": SubResource("AnimationLibrary_8m8dn")
+}
+
+[node name="Gate" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Gate"]
+texture_filter = 1
+texture = ExtResource("2_qwkyf")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Gate"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gate/StaticBody2D"]
+shape = SubResource("RectangleShape2D_q7grs")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_kilw6")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

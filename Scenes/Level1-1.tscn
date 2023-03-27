@@ -1,14 +1,131 @@
-[gd_scene load_steps=10 format=3 uid="uid://se83gtw3xdqj"]
+[gd_scene load_steps=11 format=3 uid="uid://se83gtw3xdqj"]
 
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="1_nk1j3"]
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="2_cm4m3"]
 [ext_resource type="TileSet" uid="uid://d4gm3qh0g0638" path="res://Resources/Tilemap.tres" id="3_14ol0"]
 [ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/wooden_crate.tscn" id="4_3u2dg"]
-[ext_resource type="Material" uid="uid://8yf5jubtmrm8" path="res://Resources/Godray Material.tres" id="5_ek8j2"]
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="6_ee75k"]
 [ext_resource type="PackedScene" uid="uid://6vvx7lqd6iam" path="res://Scenes/Button.tscn" id="7_0bnro"]
 [ext_resource type="PackedScene" uid="uid://dgs0b6egrwal3" path="res://Scenes/Gate.tscn" id="8_2okqf"]
 [ext_resource type="PackedScene" uid="uid://cp28prum6xgl6" path="res://Scenes/Scene Transitioner.tscn" id="8_ajhna"]
+
+[sub_resource type="Shader" id="Shader_0oebt"]
+code = "shader_type canvas_item;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform float angle = -0.3;
+uniform float position = -0.2;
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform float cutoff : hint_range(-1.0, 1.0) = 0.1;
+uniform float falloff : hint_range(0.0, 1.0) = 0.2;
+uniform float edge_fade : hint_range(0.0, 1.0) = 0.15;
+
+uniform float speed = 1.0;
+uniform float ray1_density = 8.0;
+uniform float ray2_density = 30.0;
+uniform float ray2_intensity : hint_range(0.0, 1.0) = 0.3;
+uniform vec4 color : source_color = vec4(1.0, 0.9, 0.65, 0.8);
+
+uniform bool hdr = false;
+uniform float seed = 5.0;
+
+// Random and noise functions from Book of Shader's chapter on Noise.
+float random(vec2 _uv) {
+    return fract(sin(dot(_uv.xy,
+                         vec2(12.9898, 78.233))) *
+        43758.5453123);
+}
+
+float noise (in vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+
+    // Smooth Interpolation
+
+    // Cubic Hermine Curve. Same as SmoothStep()
+    vec2 u = f * f * (3.0-2.0 * f);
+
+    // Mix 4 coorners percentages
+    return mix(a, b, u.x) +
+            (c - a)* u.y * (1.0 - u.x) +
+            (d - b) * u.x * u.y;
+}
+
+mat2 rotate(float _angle){
+    return mat2(vec2(cos(_angle), -sin(_angle)),
+                vec2(sin(_angle), cos(_angle)));
+}
+
+vec4 screen(vec4 base, vec4 blend){
+	return 1.0 - (1.0 - base) * (1.0 - blend);
+}
+
+void fragment()
+{
+	
+	// Rotate, skew and move the UVs
+	vec2 transformed_uv = ( rotate(angle) * (UV - position) )  / ( (UV.y + spread) - (UV.y * spread) );
+	
+	// Animate the ray according the the new transformed UVs
+	vec2 ray1 = vec2(transformed_uv.x * ray1_density + sin(TIME * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	vec2 ray2 = vec2(transformed_uv.x * ray2_density + sin(TIME * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	
+	// Cut off the ray's edges
+	float cut = step(cutoff, transformed_uv.x) * step(cutoff, 1.0 - transformed_uv.x);
+	ray1 *= cut;
+	ray2 *= cut;
+	
+	// Apply the noise pattern (i.e. create the rays)
+	float rays;
+	
+	if (hdr){
+		// This is not really HDR, but check this to not clamp the two merged rays making 
+		// their values go over 1.0. Can make for some nice effect
+		rays = noise(ray1) + (noise(ray2) * ray2_intensity);
+	}
+	else{
+		 rays = clamp(noise(ray1) + (noise(ray2) * ray2_intensity), 0., 1.);
+	}
+	
+	// Fade out edges
+	rays *= smoothstep(0.0, falloff, (1.0 - UV.y)); // Bottom
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, transformed_uv.x); // Left
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, 1.0 - transformed_uv.x); // Right
+	
+	// Color to the rays
+	vec3 shine = vec3(rays) * color.rgb;
+
+	// Try different blending modes for a nicer effect. \"Screen\" is included in the code,
+	// but take a look at https://godotshaders.com/snippet/blending-modes/ for more.
+	// With \"Screen\" blend mode:
+	shine = screen(texture(SCREEN_TEXTURE, SCREEN_UV), vec4(color)).rgb;
+	
+	COLOR = vec4(shine, rays * color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y72s6"]
+shader = SubResource("Shader_0oebt")
+shader_parameter/angle = -0.548
+shader_parameter/position = -0.16
+shader_parameter/spread = 0.351
+shader_parameter/cutoff = -0.633
+shader_parameter/falloff = 1.0
+shader_parameter/edge_fade = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 18.351
+shader_parameter/ray2_density = 25.0
+shader_parameter/ray2_intensity = 0.939
+shader_parameter/color = Color(1, 0.952941, 0.811765, 0.211765)
+shader_parameter/hdr = false
+shader_parameter/seed = 2.0
 
 [node name="Level" type="Node2D"]
 
@@ -18,6 +135,7 @@
 position = Vector2(160, 90)
 
 [node name="Midas" parent="." instance=ExtResource("2_cm4m3")]
+z_index = 1
 position = Vector2(40, 138)
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -35,7 +153,7 @@ layer_1/z_index = -2
 layer_1/tile_data = PackedInt32Array(1114151, 327685, 0, 1048615, 1179653, 3, 983079, 1179653, 3, 917543, 1179653, 3, 852007, 1179653, 3, 786471, 1179653, 3, 524307, 1179653, 3, 589843, 1179653, 3, 655379, 1179653, 3, 720915, 1179653, 3, 786451, 1179653, 3, 851987, 1179653, 3, 917523, 1179653, 3, 983059, 1048581, 3, 1048595, 1048581, 3, 1114131, 327685, 0, 524308, 1179653, 3, 589844, 1179653, 3, 655380, 1179653, 3, 720916, 1179653, 3, 786452, 1179653, 3, 851988, 1179653, 3, 917524, 1179653, 3, 983060, 1179653, 3, 1048596, 1179653, 3, 1114132, 327685, 0, 524309, 1179653, 3, 589845, 1179653, 3, 655381, 1179653, 3, 720917, 1179653, 3, 786453, 1179653, 3, 851989, 1179653, 3, 917525, 1179653, 3, 983061, 1179653, 3, 1048597, 1179653, 3, 1114133, 327685, 0, 524310, 1179653, 3, 589846, 1179653, 3, 655382, 1179653, 3, 720918, 1179653, 3, 786454, 1179653, 3, 851990, 1179653, 3, 917526, 1179653, 3, 983062, 1179653, 3, 1048598, 1179653, 3, 1114134, 327685, 0, 524311, 1179653, 3, 589847, 1179653, 3, 655383, 1179653, 3, 720919, 1179653, 3, 786455, 1179653, 3, 851991, 1179653, 3, 983063, 1179653, 3, 1048599, 1179653, 3, 1114135, 327685, 0, 524312, 1179653, 3, 589848, 1179653, 3, 655384, 1179653, 3, 720920, 1179653, 3, 786456, 1179653, 3, 851992, 917509, 0, 983064, 917509, 1, 1048600, 1179653, 3, 1114136, 327685, 0, 524313, 1179653, 3, 589849, 1179653, 3, 655385, 1179653, 3, 720921, 1179653, 3, 786457, 1179653, 3, 851993, 983045, 0, 983065, 983045, 1, 1048601, 1179653, 3, 1114137, 327685, 0, 524314, 1179653, 3, 589850, 1179653, 3, 655386, 1179653, 3, 720922, 1179653, 3, 786458, 1179653, 3, 851994, 1179653, 3, 917530, 1048581, 3, 983066, 1179653, 3, 1048602, 1179653, 3, 1114138, 327685, 0, 524315, 1179653, 3, 589851, 1179653, 3, 655387, 1179653, 3, 720923, 1179653, 3, 786459, 1179653, 3, 851995, 1179653, 3, 917531, 1179653, 3, 983067, 1179653, 3, 1048603, 1179653, 3, 1114139, 327685, 0, 524316, 1179653, 3, 589852, 1179653, 3, 655388, 1179653, 3, 720924, 1179653, 3, 786460, 1179653, 3, 851996, 1179653, 3, 917532, 1179653, 3, 983068, 1179653, 3, 1048604, 1179653, 3, 1114140, 327685, 0, 524317, 1179653, 3, 589853, 1179653, 3, 655389, 1179653, 3, 720925, 1179653, 3, 786461, 1179653, 3, 851997, 1179653, 3, 983069, 1179653, 3, 1048605, 1179653, 3, 1114141, 327685, 0, 524318, 1179653, 3, 589854, 1179653, 3, 655390, 1179653, 3, 720926, 1179653, 3, 786462, 1179653, 3, 851998, 917509, 0, 983070, 917509, 1, 1048606, 1179653, 3, 1114142, 327685, 0, 524319, 1179653, 3, 589855, 1179653, 3, 655391, 1179653, 3, 720927, 1179653, 3, 786463, 1179653, 3, 851999, 983045, 0, 983071, 983045, 1, 1048607, 1179653, 3, 1114143, 327685, 0, 524320, 1179653, 3, 589856, 1179653, 3, 655392, 1179653, 3, 720928, 1179653, 3, 786464, 1179653, 3, 852000, 1179653, 3, 917536, 1048581, 3, 983072, 1179653, 3, 1048608, 1179653, 3, 1114144, 327685, 0, 524321, 1179653, 3, 589857, 1179653, 3, 655393, 1179653, 3, 720929, 1179653, 3, 786465, 1179653, 3, 852001, 1179653, 3, 917537, 1179653, 3, 983073, 1179653, 3, 1048609, 1179653, 3, 1114145, 327685, 0, 524322, 1179653, 3, 589858, 1179653, 3, 655394, 1179653, 3, 720930, 1179653, 3, 786466, 1179653, 3, 852002, 1179653, 3, 917538, 1179653, 3, 983074, 1179653, 3, 1048610, 1179653, 3, 1114146, 327685, 0, 786467, 1179653, 3, 852003, 1179653, 3, 917539, 1179653, 3, 983075, 1179653, 3, 1048611, 1179653, 3, 1114147, 327685, 0, 786468, 1179653, 3, 852004, 1179653, 3, 917540, 1179653, 3, 983076, 1179653, 3, 1048612, 1179653, 3, 1114148, 327685, 0, 786469, 1179653, 3, 852005, 1179653, 3, 917541, 1179653, 3, 983077, 1179653, 3, 1048613, 1179653, 3, 1114149, 327685, 0, 786470, 1179653, 3, 852006, 1179653, 3, 917542, 1179653, 3, 983078, 1179653, 3, 1048614, 1179653, 3, 1114150, 327685, 0, 917527, 1114117, 3, 917533, 1114117, 3, 524323, 1179653, 3, 589859, 1179653, 3, 655395, 1179653, 3, 720931, 1179653, 3, 1179667, 327685, 0, 1179668, 327685, 0, 1179669, 327685, 0, 1179670, 327685, 0, 1179671, 327685, 0, 1179672, 327685, 0, 1179673, 327685, 0, 1179674, 327685, 0, 1179675, 327685, 0, 1179676, 327685, 0, 1179677, 327685, 0, 1179678, 327685, 0, 1179679, 327685, 0, 1179680, 327685, 0, 1179681, 327685, 0, 1179682, 327685, 0, 1179683, 327685, 0, 1179684, 327685, 0, 1179685, 327685, 0, 1179686, 327685, 0, 1179687, 327685, 0, 1245223, 327685, 0, 1245222, 327685, 0, 1245221, 327685, 0, 1245220, 327685, 0, 1245219, 327685, 0, 1245218, 327685, 0, 1245217, 327685, 0, 1245216, 327685, 0, 1245215, 327685, 0, 1245214, 327685, 0, 1245213, 327685, 0, 1245212, 327685, 0, 1245211, 327685, 0, 1245210, 327685, 0, 1245209, 327685, 0, 1245208, 327685, 0, 1245207, 327685, 0, 1245206, 327685, 0, 1245205, 327685, 0, 1245204, 327685, 0, 1245203, 327685, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = ExtResource("5_ek8j2")
+material = SubResource("ShaderMaterial_y72s6")
 position = Vector2(160, 90)
 scale = Vector2(80, 45)
 texture = ExtResource("6_ee75k")
@@ -50,7 +168,8 @@ position = Vector2(284, 128)
 position = Vector2(118, 137)
 
 [node name="Area2D" parent="." instance=ExtResource("8_ajhna")]
-position = Vector2(328, 126)
+position = Vector2(329, 121)
+scale = Vector2(1, 1.88)
 level_id = 2
 
 [node name="Button" parent="." instance=ExtResource("7_0bnro")]

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ch8f28jruh7oc" path="res://Sprites/wooden-crate.png" id="3_te4xe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbucs"]
-size = Vector2(7.8, 8)
+size = Vector2(7, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p3lh"]
 size = Vector2(10, 9)

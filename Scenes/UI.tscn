@@ -266,3 +266,4 @@ texture_hover = ExtResource("21_ryob4")
 [connection signal="value_changed" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/sfx slider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="ready" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/music slider" to="." method="_on_music_slider_ready"]
 [connection signal="value_changed" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/music slider" to="." method="_on_music_slider_value_changed"]
+[connection signal="pressed" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]
