@@ -67,14 +67,13 @@ func _physics_process(delta):
 				$AnimationPlayer.play("idle push left")
 			elif direction == 0 && last_direction_pushed == false: #idle right
 				$AnimationPlayer.play("idle push right")
-		if Input.is_action_just_released("pull"):
-			if crate:
-				crate.being_pulled = false
-				crate = null
 	if !is_on_floor() || crate == null || !crate.is_in_group("crate") || (crate && Input.is_action_just_released("pull")):
 		if velocity.x != 0:
 			$AnimationPlayer.play("run")
 		if velocity.x == 0:
 			$AnimationPlayer.play("idle")
+	if crate and Input.is_action_just_released("pull"):
+		crate.being_pulled = false
+		crate = null
 	get_node("RayCast2D").enabled = false
 	move_and_slide()

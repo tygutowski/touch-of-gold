@@ -23,17 +23,21 @@ func _physics_process(delta):
 	if midas_on_left && direction > 0:
 		push_box(20)
 	elif midas_on_right && direction < 0:
-		push_box(-20)
+		push_box(20)
 	elif midas_on_left and being_pulled:
-		push_box(-35)
+		push_box(320)
 	elif midas_on_right and being_pulled:
-		push_box(35)
+		push_box(320)
 	# if a crate on the left is pushing to the right
 	if crate_on_left && direction > 0:
 		push_box(20)
 	# if a crate on the right is pushing to the left
 	if crate_on_right && direction < 0:
-		push_box(-20)
+		push_box(20)
+	if get_real_velocity().x != 0 && !get_node("gold push audio").playing:
+		get_node("gold push audio").playing = true
+	elif is_zero_approx(get_real_velocity().x) && get_node("gold push audio").playing:
+		get_node("gold push audio").playing = false
 	move_and_slide()
 
 func _on_left_area_2d_body_entered(body):
@@ -72,8 +76,8 @@ func _on_right_area_2d_body_exited(body):
 	if body.is_in_group("crate") && body != self:
 		crate_on_right = false
 
-func push_box(direction):
-	velocity.x = direction
+func push_box(strength):
+	velocity.x = midas.direction * strength
 
 func touch_box(body):
 	if body == midas:

@@ -136,7 +136,7 @@ position = Vector2(160, 90)
 
 [node name="Midas" parent="." instance=ExtResource("2_cm4m3")]
 z_index = 1
-position = Vector2(40, 138)
+position = Vector2(248, 129)
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
@@ -165,7 +165,7 @@ position = Vector2(276, 128)
 position = Vector2(284, 128)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("4_3u2dg")]
-position = Vector2(118, 137)
+position = Vector2(261, 130)
 
 [node name="Area2D" parent="." instance=ExtResource("8_ajhna")]
 position = Vector2(329, 121)

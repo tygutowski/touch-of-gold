@@ -49,18 +49,6 @@ tracks/2/keys = {
 "method": &"open_gate"
 }]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("StaticBody2D2/CollisionPolygon2D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-3, 0), Vector2(3, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_3ushl"]
 resource_name = "go up"
@@ -78,25 +66,13 @@ tracks/0/keys = {
 "update": 0,
 "values": [Rect2(-2, 0, 8, 8), Rect2(4, 0, 8, 8)]
 }
-tracks/1/type = "value"
+tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StaticBody2D2/CollisionPolygon2D:position")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(3, 0), Vector2(-3, 0)]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -124,7 +100,7 @@ position = Vector2(-2.98023e-08, 0)
 rotation = 1.57079
 texture = ExtResource("2_roq5q")
 region_enabled = true
-region_rect = Rect2(4, 0, 8, 8)
+region_rect = Rect2(-2, 0, 8, 8)
 
 [node name="Button-base" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -135,15 +111,7 @@ texture = ExtResource("3_v3rdr")
 rotation = 1.57079
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(1.99999, 2.00001, 2.00001, -1.99999, 4.00003, -3.99997, 3.99997, 4.00003)
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-rotation = 1.57079
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-position = Vector2(-3, 0)
-polygon = PackedVector2Array(4.99999, 2.00001, -1.26362e-05, 1.99998, 1.26362e-05, -2.00002, 5.00001, -1.99999)
-disabled = true
+polygon = PackedVector2Array(1.99998, 3.00001, 2.00002, -2.99999, 4.00002, -2.99997, 3.99998, 3.00003)
 
 [node name="Area2D" type="Area2D" parent="."]
 rotation = 1.57079

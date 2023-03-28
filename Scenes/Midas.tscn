@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://dq2ovlb72j0hk"]
+[gd_scene load_steps=16 format=3 uid="uid://dq2ovlb72j0hk"]
 
 [ext_resource type="Script" path="res://Scripts/Midas.gd" id="1_4htpr"]
 [ext_resource type="Texture2D" uid="uid://cymsghh0br2cv" path="res://Sprites/midas-animations.png" id="2_63sn7"]
+[ext_resource type="AudioStream" uid="uid://5rulse68icoa" path="res://SFX/left-footstep.wav" id="3_tvxu6"]
+[ext_resource type="AudioStream" uid="uid://bthq3tolfelhg" path="res://SFX/right-footstep.wav" id="4_v4ro6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulyel"]
-size = Vector2(6, 10)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxejl"]
+size = Vector2(6, 9)
 
 [sub_resource type="Animation" id="Animation_in5dt"]
 resource_name = "idle"
@@ -60,7 +62,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-6, 0)]
+"values": [Vector2(-10, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_sfwf1"]
@@ -100,7 +102,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, 0)]
+"values": [Vector2(10, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_8n3k8"]
@@ -157,7 +159,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-6, 0)]
+"values": [Vector2(-10, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_8dxhm"]
@@ -198,7 +200,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, 0)]
+"values": [Vector2(10, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ghroa"]
@@ -215,6 +217,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("left footstep:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("right footstep:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_5imgr"]
@@ -287,11 +313,12 @@ _data = {
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["midas"]]
+floor_snap_length = 5.0
 script = ExtResource("1_4htpr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_ulyel")
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_xxejl")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(-6, 0)
@@ -300,8 +327,10 @@ target_position = Vector2(-6, 0)
 texture_filter = 1
 texture_repeat = 1
 texture = ExtResource("2_63sn7")
+flip_h = true
 hframes = 8
 vframes = 2
+frame = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -310,3 +339,11 @@ libraries = {
 
 [node name="gold point" type="Node2D" parent="."]
 position = Vector2(0, 3)
+
+[node name="left footstep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tvxu6")
+volume_db = -14.37
+
+[node name="right footstep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_v4ro6")
+volume_db = -14.37
