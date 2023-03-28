@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://se83gtw3xdqj"]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="1_nk1j3"]
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="2_cm4m3"]
 [ext_resource type="TileSet" uid="uid://d4gm3qh0g0638" path="res://Resources/Tilemap.tres" id="3_14ol0"]
-[ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/wooden_crate.tscn" id="4_3u2dg"]
+[ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/Crate.tscn" id="4_3u2dg"]
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="6_ee75k"]
 [ext_resource type="PackedScene" uid="uid://6vvx7lqd6iam" path="res://Scenes/Button.tscn" id="7_0bnro"]
 [ext_resource type="PackedScene" uid="uid://dgs0b6egrwal3" path="res://Scenes/Gate.tscn" id="8_2okqf"]

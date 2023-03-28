@@ -9,13 +9,14 @@ var gravity = 500
 var direction = 0
 var last_direction_pushed = 0
 var crate = null
-var pushing_and_moving = false
+var pushpulling_crate = false
+var pushpulling_speed = 25
 func _physics_process(delta):
 	# the tile the player is currently at. takes the transform and divides by the tile size (8)
 	var player_tile = get_node("gold point").get_global_transform().origin / 8
-
+	var gp = get_node("gold point").get_global_transform().origin
 	# list of tiles above, below, left and right of the player
-	var tiles_to_change = [Vector2i(player_tile.x+1, player_tile.y), Vector2i(player_tile.x-1, player_tile.y), Vector2i(player_tile.x, player_tile.y+1), Vector2i(player_tile.x, player_tile.y-1), Vector2i(player_tile.x+1, player_tile.y+1), Vector2i(player_tile.x+1, player_tile.y-1), Vector2i(player_tile.x-1, player_tile.y-1), Vector2i(player_tile.x-1, player_tile.y+1)]
+	var tiles_to_change = [Vector2i(gp.x+4, gp.y+4)/8, Vector2i(gp.x+4, gp.y-4)/8, Vector2i(gp.x+4, gp.y)/8, Vector2i(gp.x-4, gp.y-4)/8, Vector2i(gp.x-4, gp.y+4)/8, Vector2i(gp.x-4, gp.y)/8, Vector2i(gp.x, gp.y)/8, Vector2i(gp.x, gp.y)/8]
 	# go through all tiles listed above
 	for tile in tiles_to_change:
 		if tilemap.get_cell_source_id(0, tile) != 999 && tilemap.get_cell_source_id(0, tile) != 1:
@@ -29,7 +30,7 @@ func _physics_process(delta):
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+	# in air
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 

@@ -313,7 +313,6 @@ _data = {
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["midas"]]
-floor_snap_length = 5.0
 script = ExtResource("1_4htpr")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -325,6 +324,7 @@ shape = SubResource("RectangleShape2D_xxejl")
 disabled = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 3)
 target_position = Vector2(-6, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

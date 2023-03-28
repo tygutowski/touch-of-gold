@@ -7,8 +7,10 @@ var midas_on_right = false
 var gravity = 500
 var crate_on_left = null
 var crate_on_right = null
-var being_pulled = false
 var is_gold = false
+var being_pulled = false
+var things_on_left = []
+var things_on_right = []
 
 func turn_to_gold():
 	is_gold = true

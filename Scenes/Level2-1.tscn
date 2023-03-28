@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://btot24gu8md21"]
+[gd_scene load_steps=10 format=3 uid="uid://b771n42cj25jh"]
 
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="1_xotr1"]
 [ext_resource type="TileSet" uid="uid://d4gm3qh0g0638" path="res://Resources/Tilemap.tres" id="2_wkd3e"]
-[ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/wooden_crate.tscn" id="3_wgknb"]
+[ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/Crate.tscn" id="3_wgknb"]
 [ext_resource type="Material" uid="uid://8yf5jubtmrm8" path="res://Resources/Godray Material.tres" id="4_psysr"]
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="5_uk1vb"]
 [ext_resource type="PackedScene" uid="uid://6vvx7lqd6iam" path="res://Scenes/Button.tscn" id="6_e4br7"]
 [ext_resource type="PackedScene" uid="uid://dgs0b6egrwal3" path="res://Scenes/Gate.tscn" id="7_4qwlg"]
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="8_3s3sg"]
+[ext_resource type="PackedScene" uid="uid://ndeufnmr7eir" path="res://Scenes/Tesla Coil.tscn" id="9_nmskb"]
 
 [node name="Level" type="Node2D"]
 
@@ -27,6 +28,13 @@ layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = -1
 layer_1/tile_data = PackedInt32Array()
+layer_2/name = "electricity"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = 1
+layer_2/tile_data = PackedInt32Array()
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, 90)
@@ -52,4 +60,15 @@ position = Vector2(108, 148)
 [node name="Node2D" parent="." instance=ExtResource("7_4qwlg")]
 position = Vector2(148, 112)
 
+[node name="plug" type="Node2D" parent="Node2D"]
+position = Vector2(-8, 12)
+
 [node name="UI" parent="." instance=ExtResource("8_3s3sg")]
+
+[node name="Node2D2" parent="." instance=ExtResource("9_nmskb")]
+position = Vector2(92, 129)
+id = 1
+
+[node name="Node2D3" parent="." instance=ExtResource("9_nmskb")]
+position = Vector2(13, 146)
+id = -2

@@ -1,5 +1,6 @@
-[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://d4gm3qh0g0638"]
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://d4gm3qh0g0638"]
 
+[ext_resource type="Texture2D" uid="uid://bq0qxtvvkvbsq" path="res://Tilemaps/electricity-tilemap.png" id="1_gx8gp"]
 [ext_resource type="Texture2D" uid="uid://bvy5oaiqgljdk" path="res://Tilemaps/gold-tilemap.png" id="1_ix41j"]
 [ext_resource type="Texture2D" uid="uid://coribxv1acr5e" path="res://Tilemaps/mint-tilemap.png" id="2_7j62q"]
 [ext_resource type="Texture2D" uid="uid://1radlhdmtp5r" path="res://Tilemaps/grey-tilemap.png" id="3_xsri2"]
@@ -7,6 +8,22 @@
 [ext_resource type="Texture2D" uid="uid://dxoofpn8ukib2" path="res://Tilemaps/blue-tilemap.png" id="5_mb86r"]
 [ext_resource type="Texture2D" uid="uid://bregmeeky348h" path="res://Tilemaps/orange-tilemap.png" id="6_fpi5f"]
 [ext_resource type="Texture2D" uid="uid://b7tkcghc6puow" path="res://Tilemaps/text-tilemap.png" id="7_7clxi"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nooaf"]
+texture = ExtResource("1_gx8gp")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vs34o"]
 texture = ExtResource("1_ix41j")
@@ -13323,3 +13340,4 @@ sources/7 = SubResource("TileSetAtlasSource_46kra")
 sources/8 = SubResource("TileSetAtlasSource_iakm1")
 sources/1 = SubResource("TileSetAtlasSource_vs34o")
 sources/999 = SubResource("TileSetAtlasSource_qs7hr")
+sources/0 = SubResource("TileSetAtlasSource_nooaf")
