@@ -11,6 +11,38 @@ var last_direction_pushed = 0
 var crate = null
 var pushpulling_crate = false
 var pushpulling_speed = 25
+
+func recalculate_electricity():
+	var linkers = tilemap.get_used_cells_by_id(2, 0, Vector2i(0,1)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,2)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,3)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,4)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,5))
+	for cell in linkers:
+		tilemap.erase_cell(2, cell)
+	recursively_calc()
+func recursively_calc():
+	var any_more = false
+	var cell_list = tilemap.get_used_cells_by_id(2, 0, Vector2i(0,0)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,1)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,2)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,3)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,4)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,5))
+	for cell in cell_list:
+		for nearby in tilemap.get_surrounding_cells(cell):
+			if tilemap.get_cell_source_id(0, nearby) == 1 && tilemap.get_cell_atlas_coords(2, nearby) == Vector2i(0,0):
+				pass
+			elif tilemap.get_cell_source_id(0, nearby) == 1 && tilemap.get_cell_atlas_coords(2, nearby) == Vector2i(0,1): # strand
+				pass
+			elif tilemap.get_cell_source_id(0, nearby) == 1 && tilemap.get_cell_atlas_coords(2, nearby) == Vector2i(-1, -1): # strand
+				var data = tilemap.get_cell_tile_data(0, nearby)
+				if data:
+					if data.get_custom_data("conductive"):
+						if tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(14, 0) || tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(18, 18):
+							tilemap.set_cell(2, nearby, 0, Vector2i(0, 5))
+						elif tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(15, 0) || tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(19, 18):
+							tilemap.set_cell(2, nearby, 0, Vector2i(0, 4))
+						elif tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(14, 1) || tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(18, 19):
+							tilemap.set_cell(2, nearby, 0, Vector2i(0, 2))
+						elif tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(15, 1) || tilemap.get_cell_atlas_coords(0, nearby) == Vector2i(19, 19):
+							tilemap.set_cell(2, nearby, 0, Vector2i(0, 3))
+						else:
+							tilemap.set_cell(2, nearby, 0, Vector2i(0,1))
+						any_more = true
+	if any_more:
+		recursively_calc()
 func _physics_process(delta):
 	# the tile the player is currently at. takes the transform and divides by the tile size (8)
 	var player_tile = get_node("gold point").get_global_transform().origin / 8
@@ -24,6 +56,7 @@ func _physics_process(delta):
 			if tile_to_swap != Vector2i(-1, -1):
 				tilemap.set_cell(0, tile, 1, tile_to_swap)
 				Stats.blocks_goldified += 1
+				recalculate_electricity()
 		if tilemap.get_cell_atlas_coords(1, tile) != Vector2i(-1, -1):
 			tilemap.set_cell(1, tile, 1, tilemap.get_cell_atlas_coords(1, tile))
 			Stats.blocks_goldified += 1

@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://yudiwr8sg55y"]
+
+[ext_resource type="Shader" path="res://Scenes/electric.gdshader" id="1_ok6yu"]
+
+[resource]
+shader = ExtResource("1_ok6yu")

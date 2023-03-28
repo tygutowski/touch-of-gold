@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c2mu3aygnsdvs" path="res://Sprites/tesla-coil.png" id="3_7dnir"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gygkm"]
-size = Vector2(10, 12)
+size = Vector2(10, 13)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_q3ulr")
@@ -18,9 +18,6 @@ texture = ExtResource("2_3mbmh")
 [node name="normal sprite" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("3_7dnir")
-
-[node name="tile" type="Node2D" parent="."]
-position = Vector2(0, 12)
 
 [node name="Area2D" type="Area2D" parent="."]
 
