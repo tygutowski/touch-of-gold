@@ -136,7 +136,7 @@ position = Vector2(160, 90)
 
 [node name="Midas" parent="." instance=ExtResource("2_cm4m3")]
 z_index = 1
-position = Vector2(248, 129)
+position = Vector2(241, 130)
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1

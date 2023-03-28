@@ -111,7 +111,7 @@ texture = ExtResource("3_v3rdr")
 rotation = 1.57079
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(1.99998, 3.00001, 2.00002, -2.99999, 4.00002, -2.99997, 3.99998, 3.00003)
+polygon = PackedVector2Array(1.99999, 2.00001, 2.00001, -1.99999, 4.00003, -3.99997, 3.99997, 4.00003)
 
 [node name="Area2D" type="Area2D" parent="."]
 rotation = 1.57079
