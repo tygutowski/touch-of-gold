@@ -48,6 +48,7 @@ size = Vector2(10, 18)
 [node name="Gate anchor" type="Node2D" groups=["gate"]]
 z_index = -1
 script = ExtResource("1_poti2")
+color = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Gate")

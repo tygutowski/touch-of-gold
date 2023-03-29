@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://b22wkfawh2f4e"]
+
+[ext_resource type="TileSet" uid="uid://d4gm3qh0g0638" path="res://Resources/Tilemap.tres" id="1_y7uvy"]
+
+[node name="TileMap" type="TileMap"]
+texture_filter = 1
+tile_set = ExtResource("1_y7uvy")
+format = 2
+layer_0/name = "fg"
+layer_0/z_index = 1
+layer_1/name = "bg"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = -2
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "electricity"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()

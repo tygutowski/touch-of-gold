@@ -100,7 +100,7 @@ position = Vector2(-2.98023e-08, 0)
 rotation = 1.57079
 texture = ExtResource("2_roq5q")
 region_enabled = true
-region_rect = Rect2(-2, 0, 8, 8)
+region_rect = Rect2(4, 0, 8, 8)
 
 [node name="Button-base" type="Sprite2D" parent="."]
 texture_filter = 1
