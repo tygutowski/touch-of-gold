@@ -1,17 +1,19 @@
-[gd_scene load_steps=24 format=3 uid="uid://dbd8iwajbjh3r"]
+[gd_scene load_steps=29 format=3 uid="uid://dbd8iwajbjh3r"]
 
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_2rgtp"]
 [ext_resource type="Texture2D" uid="uid://cqjmfg5ld8d3s" path="res://UI/crt-overlay.png" id="2_y8jqr"]
 [ext_resource type="Texture2D" uid="uid://mtie715hnao7" path="res://UI/ui-frame.png" id="3_w7bua"]
-[ext_resource type="Texture2D" uid="uid://cp2hpo5amqjwx" path="res://UI/button-paused-default.png" id="4_ojwp5"]
+[ext_resource type="Texture2D" uid="uid://btss8u1w8aght" path="res://UI/button-paused-hovered.png" id="4_ttsjl"]
 [ext_resource type="Texture2D" uid="uid://c2oewjcdiq4vn" path="res://UI/button-resume-default.png" id="5_mp22w"]
 [ext_resource type="Texture2D" uid="uid://dxap6hny6i167" path="res://UI/button-resume-hovered.png" id="6_6w615"]
 [ext_resource type="Texture2D" uid="uid://c6q1a71e211l" path="res://UI/button-restart-default.png" id="7_wey14"]
 [ext_resource type="Texture2D" uid="uid://cf2hevgnirmt3" path="res://UI/button-restart-hovered.png" id="8_56tyf"]
 [ext_resource type="Texture2D" uid="uid://cx2wcorcrtfuq" path="res://UI/button-options-default.png" id="9_8g1ip"]
 [ext_resource type="Texture2D" uid="uid://dw5mq46w5xvgl" path="res://UI/button-options-hovered.png" id="10_56fai"]
+[ext_resource type="Texture2D" uid="uid://coo7jxygqfx00" path="res://UI/controls.png" id="11_b12im"]
 [ext_resource type="Texture2D" uid="uid://cb3udwdyfon14" path="res://UI/button-exit-to-menu-default.png" id="11_kgnv2"]
 [ext_resource type="Texture2D" uid="uid://bkuawv58002wi" path="res://UI/button-exit-to-menu-hovered.png" id="12_4edr5"]
+[ext_resource type="Texture2D" uid="uid://m4vkyo4swsug" path="res://Tilemaps/golden-controls.png" id="12_powgm"]
 [ext_resource type="Texture2D" uid="uid://neko4x75uu0w" path="res://UI/button-music-default.png" id="13_k605h"]
 [ext_resource type="Texture2D" uid="uid://cnfsh6427vaw0" path="res://UI/slider.png" id="14_d1q4q"]
 [ext_resource type="Texture2D" uid="uid://b0qt4jcs0mc0v" path="res://UI/tick.png" id="15_rtucf"]
@@ -20,6 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://vyl5mvnxw416" path="res://Scenes/parallax_background.tscn" id="20_tqvl5"]
 [ext_resource type="Texture2D" uid="uid://bwtxqogwe1jxh" path="res://UI/button-back-default.png" id="20_vte0s"]
 [ext_resource type="Texture2D" uid="uid://bywutnlqm205h" path="res://UI/button-back-hovered.png" id="21_ryob4"]
+[ext_resource type="Texture2D" uid="uid://do2hxsvoiqkqa" path="res://Tilemaps/wasd_to_move.png" id="21_vjfca"]
+[ext_resource type="Texture2D" uid="uid://ete6xf1rtldm" path="res://Tilemaps/space_to_jump.png" id="22_hb8vt"]
+[ext_resource type="Texture2D" uid="uid://u6sq8mko27ka" path="res://Tilemaps/c_to_pull.png" id="23_trfi0"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gsv7p"]
 texture = ExtResource("16_4v8br")
@@ -79,7 +84,7 @@ theme_override_constants/margin_bottom = 1
 [node name="TextureRect" type="TextureRect" parent="pause menu/MarginContainer/VBoxContainer/MarginContainer2"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("4_ojwp5")
+texture = ExtResource("4_ttsjl")
 stretch_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="pause menu/MarginContainer/VBoxContainer"]
@@ -90,7 +95,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="NinePatchRect" type="NinePatchRect" parent="pause menu/MarginContainer/VBoxContainer/MarginContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(100, 70)
+custom_minimum_size = Vector2(100, 90)
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("3_w7bua")
@@ -106,6 +111,7 @@ size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="resume" type="TextureButton" parent="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer"]
 texture_filter = 1
@@ -128,6 +134,13 @@ texture_normal = ExtResource("9_8g1ip")
 texture_hover = ExtResource("10_56fai")
 stretch_mode = 3
 
+[node name="controls" type="TextureButton" parent="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture_normal = ExtResource("11_b12im")
+texture_hover = ExtResource("12_powgm")
+stretch_mode = 3
+
 [node name="exit" type="TextureButton" parent="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
@@ -137,6 +150,12 @@ stretch_mode = 3
 
 [node name="options menu" type="CanvasLayer" parent="."]
 visible = false
+
+[node name="TextureRect" type="TextureRect" parent="options menu"]
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("2_y8jqr")
+stretch_mode = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="options menu"]
 anchors_preset = 15
@@ -175,7 +194,7 @@ theme_override_constants/margin_right = 40
 [node name="TextureRect" type="TextureRect" parent="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer2"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("9_8g1ip")
+texture = ExtResource("10_56fai")
 stretch_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="options menu/CenterContainer/MarginContainer/VBoxContainer"]
@@ -256,14 +275,125 @@ size_flags_vertical = 4
 texture_normal = ExtResource("20_vte0s")
 texture_hover = ExtResource("21_ryob4")
 
+[node name="controls" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="controls"]
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("2_y8jqr")
+stretch_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="controls"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="controls/CenterContainer"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="controls/CenterContainer/MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_w7bua")
+region_rect = Rect2(0.162807, 0.0956631, 45.6741, 45.8092)
+patch_margin_left = 26
+patch_margin_top = 26
+patch_margin_right = 26
+patch_margin_bottom = 26
+
+[node name="VBoxContainer" type="VBoxContainer" parent="controls/CenterContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="controls/CenterContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="TextureRect" type="TextureRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_powgm")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="controls/CenterContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="NinePatchRect" type="NinePatchRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_w7bua")
+patch_margin_left = 18
+patch_margin_top = 18
+patch_margin_right = 18
+patch_margin_bottom = 18
+
+[node name="CenterContainer" type="CenterContainer" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TextureRect" type="TextureRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("21_vjfca")
+stretch_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("22_hb8vt")
+stretch_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("23_trfi0")
+stretch_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+stretch_mode = 3
+
+[node name="TextureRect5" type="TextureRect" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+stretch_mode = 3
+
+[node name="back" type="TextureButton" parent="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture_normal = ExtResource("20_vte0s")
+texture_hover = ExtResource("21_ryob4")
+stretch_mode = 3
+
 [node name="ParallaxBackground" parent="." instance=ExtResource("20_tqvl5")]
 
 [connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/controls" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/exit" to="." method="_on_exit_pressed"]
 [connection signal="ready" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/sfx slider" to="." method="_on_sfx_slider_ready"]
 [connection signal="value_changed" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer2/sfx slider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="ready" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/music slider" to="." method="_on_music_slider_ready"]
 [connection signal="value_changed" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/music slider" to="." method="_on_music_slider_value_changed"]
 [connection signal="pressed" from="options menu/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="controls/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer/back" to="." method="_on_back_pressed"]

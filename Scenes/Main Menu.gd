@@ -5,7 +5,7 @@ func _process(_delta):
 		$"main menu".visible = true
 		$"stage select".visible = false
 		$"options".visible = false
-
+		$"controls".visible = false
 func _ready():
 	for node in get_tree().get_nodes_in_group("sfx slider"):
 		node.value = Stats.sfx_volume
@@ -32,11 +32,12 @@ func _on_options_pressed():
 	$"main menu".visible = false
 	$"stage select".visible = false
 	$"options".visible = true
-
+	$"controls".visible = false
 func _on_stage_select_pressed():
 	$"main menu".visible = false
 	$"stage select".visible = true
 	$"options".visible = false
+	$"controls".visible = false
 
 func _on_new_game_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Level1-1.tscn")
@@ -57,6 +58,7 @@ func _on_back_pressed():
 	$"main menu".visible = true
 	$"stage select".visible = false
 	$"options".visible = false
+	$"controls".visible = false
 
 func _on_stats_pressed():
 	pass
@@ -65,3 +67,10 @@ func _on_stats_pressed():
 func _on_sfx_slider_value_changed(value):
 	set_sfx_to(value)
 	Stats.sfx_volume = value
+
+
+func _on_controls_pressed():
+	$"main menu".visible = false
+	$"stage select".visible = false
+	$"options".visible = false
+	$"controls".visible = true

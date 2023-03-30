@@ -97,7 +97,6 @@ func recursively_calc():
 		if cra.get_node("AnimationPlayer").get_current_animation() == "electric":
 			var tile = cra.get_global_transform().origin / 8
 			# turn nearby cells into electric tiles
-			print("GTF")
 			for nearby in tilemap.get_surrounding_cells(tile):
 				if tilemap.get_cell_source_id(0, nearby) == 1 && tilemap.get_cell_atlas_coords(2, nearby) == Vector2i(-1, -1): # strand
 					var data = tilemap.get_cell_tile_data(0, nearby)

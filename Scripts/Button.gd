@@ -2,7 +2,7 @@ extends Node2D
 var things_pushing_crate = []
 @export var is_down = false
 @export var id = 0
-@onready var root_tile = Vector2i(get_global_transform().origin.x, get_global_transform().origin.y + 8) / 8
+@onready var root_tile = Vector2i(get_node("plug").get_global_transform().origin.x, get_node("plug").get_global_transform().origin.y) / 8
 @onready var tilemap = get_node("../TileMap")
 @onready var midas = get_tree().get_first_node_in_group("midas")
 func _ready():

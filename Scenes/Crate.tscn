@@ -1,11 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dup7ropid75ax"]
+[gd_scene load_steps=11 format=3 uid="uid://dup7ropid75ax"]
 
 [ext_resource type="Script" path="res://Scripts/wooden_crate.gd" id="1_8cw2s"]
 [ext_resource type="Texture2D" uid="uid://bxoxdc8odi440" path="res://Sprites/crate-spritesheet.png" id="2_fw1wr"]
 [ext_resource type="AudioStream" uid="uid://bero5bnsyq40s" path="res://SFX/pushing-stone.wav" id="4_2rq40"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_litfk"]
-size = Vector2(7.8, 7.8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p3lh"]
 size = Vector2(10, 9)
@@ -74,11 +71,11 @@ _data = {
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["crate"]]
 z_index = 2
-slide_on_ceiling = false
+floor_stop_on_slope = false
 script = ExtResource("1_8cw2s")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_litfk")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-3.9, -3.9, 3.9, -3.9, 3.9, 3, 3, 3.9, -3, 4, -3.9, 3)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -114,7 +111,7 @@ libraries = {
 "": SubResource("AnimationLibrary_64wul")
 }
 
-[node name="RayCast2D" type="RayCast2D" parent="." groups=["raycast"]]
+[node name="RayCast2D1" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(0, 6)
 
 [node name="RayCast2D2" type="RayCast2D" parent="." groups=["raycast"]]
