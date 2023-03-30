@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dbd8iwajbjh3r"]
+[gd_scene load_steps=28 format=3 uid="uid://dbd8iwajbjh3r"]
 
 [ext_resource type="Script" path="res://Scripts/UI.gd" id="1_2rgtp"]
 [ext_resource type="Texture2D" uid="uid://cqjmfg5ld8d3s" path="res://UI/crt-overlay.png" id="2_y8jqr"]
@@ -19,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://b0qt4jcs0mc0v" path="res://UI/tick.png" id="15_rtucf"]
 [ext_resource type="Texture2D" uid="uid://dphlox1gau1qj" path="res://UI/slider-bar.png" id="16_4v8br"]
 [ext_resource type="Texture2D" uid="uid://bgec10pnbbloi" path="res://UI/button-sfx-default.png" id="17_nt8at"]
-[ext_resource type="PackedScene" uid="uid://vyl5mvnxw416" path="res://Scenes/parallax_background.tscn" id="20_tqvl5"]
 [ext_resource type="Texture2D" uid="uid://bwtxqogwe1jxh" path="res://UI/button-back-default.png" id="20_vte0s"]
 [ext_resource type="Texture2D" uid="uid://bywutnlqm205h" path="res://UI/button-back-hovered.png" id="21_ryob4"]
 [ext_resource type="Texture2D" uid="uid://do2hxsvoiqkqa" path="res://Tilemaps/wasd_to_move.png" id="21_vjfca"]
@@ -383,8 +382,6 @@ layout_mode = 2
 texture_normal = ExtResource("20_vte0s")
 texture_hover = ExtResource("21_ryob4")
 stretch_mode = 3
-
-[node name="ParallaxBackground" parent="." instance=ExtResource("20_tqvl5")]
 
 [connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="pause menu/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/VBoxContainer/restart" to="." method="_on_restart_pressed"]
