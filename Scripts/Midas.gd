@@ -26,14 +26,7 @@ func recalculate_electricity():
 	recursively_calc()
 func recursively_calc():
 	var any_more = false
-	check_tiles_near_tiles(any_more)
-	if !any_more:
-		check_crates_near_crates(any_more)
-	check_tiles_near_crates()
-	if any_more:
-		recursively_calc()
-
-func check_tiles_near_tiles(any_more):
+	# get all power cells
 	var cell_list = tilemap.get_used_cells_by_id(2, 0, Vector2i(0,0)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,1)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,2)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,3)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,4)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,5))
 	# go through all crates
 	# for each power cell
@@ -59,8 +52,49 @@ func check_tiles_near_tiles(any_more):
 						else:
 							tilemap.set_cell(2, nearby, 0, Vector2i(0,1))
 						any_more = true
-	return any_more
-func check_tiles_near_crates():
+	# if there are no more tiles to be turned to electric
+	if !any_more:
+		# check for all gold crates
+		var crates = get_tree().get_nodes_in_group("crate")
+		for cra in crates:
+			if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
+				var gp = cra.point.get_global_transform().origin
+				var tiles_to_check = [
+				Vector2i(gp.x+4, gp.y+7)/8, # 1
+				Vector2i(gp.x+5, gp.y+4)/8, # 2
+				Vector2i(gp.x+5, gp.y  )/8, # 3
+				Vector2i(gp.x+5, gp.y-4)/8, # 4
+				Vector2i(gp.x+4, gp.y-5)/8, # 5
+				Vector2i(gp.x  , gp.y-5)/8, # 6
+				Vector2i(gp.x-4, gp.y-5)/8, # 7
+				Vector2i(gp.x-5, gp.y-4)/8, # 8
+				Vector2i(gp.x-5, gp.y  )/8, # 9
+				Vector2i(gp.x-5, gp.y+4)/8, # 10
+				Vector2i(gp.x-4, gp.y+7)/8, # 11
+				Vector2i(gp.x  , gp.y+7)/8  # 12
+				]
+				var already_electrified = false
+				# see if any nearby tiles are electric
+				for tile in tiles_to_check:
+					if tilemap.get_cell_source_id(2, tile) == 0:
+						if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
+							cra.get_node("AnimationPlayer").play("electric")
+							#print("T")
+							already_electrified = true
+							break
+				# see if any nearby crates are electric
+				if !already_electrified:
+					for ray in get_tree().get_nodes_in_group("raycast"):
+						ray.enabled = true
+						ray.force_raycast_update()
+						var col = ray.get_collider()
+						if col:
+							if col.is_in_group("crate"):
+								if col.get_node("AnimationPlayer").get_current_animation() == "electric":
+									if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
+										cra.get_node("AnimationPlayer").play("electric")
+										#print("C")
+										break
 	for cra in get_tree().get_nodes_in_group("crate"):
 		# if any are electric
 		if cra.get_node("AnimationPlayer").get_current_animation() == "electric":
@@ -81,51 +115,10 @@ func check_tiles_near_crates():
 								tilemap.set_cell(2, nearby, 0, Vector2i(0, 3))
 							else:
 								tilemap.set_cell(2, nearby, 0, Vector2i(0,1))
-
-func check_crates_near_crates(any_more):
-	# check for all gold crates
-	var crates = get_tree().get_nodes_in_group("crate")
-	for cra in crates:
-		if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
-			var gp = cra.point.get_global_transform().origin
-			var tiles_to_check = [
-			Vector2i(gp.x+4, gp.y+5)/8, # 1
-			Vector2i(gp.x+5, gp.y+4)/8, # 2
-			Vector2i(gp.x+5, gp.y  )/8, # 3
-			Vector2i(gp.x+5, gp.y-4)/8, # 4
-			Vector2i(gp.x+4, gp.y-5)/8, # 5
-			Vector2i(gp.x  , gp.y-5)/8, # 6
-			Vector2i(gp.x-4, gp.y-5)/8, # 7
-			Vector2i(gp.x-5, gp.y-4)/8, # 8
-			Vector2i(gp.x-5, gp.y  )/8, # 9
-			Vector2i(gp.x-5, gp.y+4)/8, # 10
-			Vector2i(gp.x-4, gp.y+5)/8, # 11
-			Vector2i(gp.x  , gp.y+5)/8  # 12
-			]
-			var already_electrified = false
-			# see if any nearby tiles are electric
-			for tile in tiles_to_check:
-				if tilemap.get_cell_source_id(2, tile) == 0:
-					if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
-						cra.get_node("AnimationPlayer").play("electric")
-						#print("T")
-						already_electrified = true
-						break
-			# see if any nearby crates are electric
-			if !already_electrified:
-				for ray in get_tree().get_nodes_in_group("raycast"):
-					ray.enabled = true
-					ray.force_raycast_update()
-					var col = ray.get_collider()
-					if col:
-						if col.is_in_group("crate"):
-							if col.get_node("AnimationPlayer").get_current_animation() == "electric":
-								if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
-									cra.get_node("AnimationPlayer").play("electric")
-									#print("C")
-									break
-	return any_more
-
+							any_more = true
+	
+	if any_more:
+		recursively_calc()
 func _physics_process(delta):
 	time += delta
 	if time > 0.25:

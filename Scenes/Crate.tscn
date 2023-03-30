@@ -71,6 +71,8 @@ _data = {
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["crate"]]
 z_index = 2
+collision_layer = 7
+collision_mask = 7
 floor_stop_on_slope = false
 script = ExtResource("1_8cw2s")
 
@@ -112,40 +114,52 @@ libraries = {
 }
 
 [node name="RayCast2D1" type="RayCast2D" parent="." groups=["raycast"]]
-target_position = Vector2(0, 6)
+target_position = Vector2(0, 8)
+collision_mask = 6
 
 [node name="RayCast2D2" type="RayCast2D" parent="." groups=["raycast"]]
-target_position = Vector2(-4, 6)
+target_position = Vector2(-4, 8)
+collision_mask = 6
 
 [node name="RayCast2D3" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(-6, 4)
+collision_mask = 6
 
 [node name="RayCast2D4" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(-6, 0)
+collision_mask = 6
 
 [node name="RayCast2D5" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(-6, -4)
+collision_mask = 6
 
 [node name="RayCast2D6" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(-4, -6)
+collision_mask = 6
 
 [node name="RayCast2D7" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(0, -6)
+collision_mask = 6
 
 [node name="RayCast2D8" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(4, -6)
+collision_mask = 6
 
 [node name="RayCast2D9" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(6, -4)
+collision_mask = 6
 
 [node name="RayCast2D10" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(6, 0)
+collision_mask = 6
 
 [node name="RayCast2D11" type="RayCast2D" parent="." groups=["raycast"]]
 target_position = Vector2(6, 4)
+collision_mask = 6
 
 [node name="RayCast2D12" type="RayCast2D" parent="." groups=["raycast"]]
-target_position = Vector2(4, 6)
+target_position = Vector2(4, 8)
+collision_mask = 6
 
 [connection signal="body_entered" from="TouchArea2D" to="." method="touch_box"]
 [connection signal="body_entered" from="LeftArea2D" to="." method="_on_left_area_2d_body_entered"]
