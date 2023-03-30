@@ -149,7 +149,6 @@ texture = ExtResource("4_yn5hl")
 position = Vector2(328, 86)
 scale = Vector2(0.830483, 1.97164)
 stage_id = 2
-level_id = 4
 
 [node name="CharacterBody2D3" parent="." instance=ExtResource("6_8v4q3")]
 position = Vector2(97, 139)
