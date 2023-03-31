@@ -53,48 +53,48 @@ func recursively_calc():
 							tilemap.set_cell(2, nearby, 0, Vector2i(0,1))
 						any_more = true
 	# if there are no more tiles to be turned to electric
-	if !any_more:
+	#if !any_more:
 		# check for all gold crates
-		var crates = get_tree().get_nodes_in_group("crate")
-		for cra in crates:
-			if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
-				var gp = cra.point.get_global_transform().origin
-				var tiles_to_check = [
-				Vector2i(gp.x+4, gp.y+7)/8, # 1
-				Vector2i(gp.x+5, gp.y+4)/8, # 2
-				Vector2i(gp.x+5, gp.y  )/8, # 3
-				Vector2i(gp.x+5, gp.y-4)/8, # 4
-				Vector2i(gp.x+4, gp.y-5)/8, # 5
-				Vector2i(gp.x  , gp.y-5)/8, # 6
-				Vector2i(gp.x-4, gp.y-5)/8, # 7
-				Vector2i(gp.x-5, gp.y-4)/8, # 8
-				Vector2i(gp.x-5, gp.y  )/8, # 9
-				Vector2i(gp.x-5, gp.y+4)/8, # 10
-				Vector2i(gp.x-4, gp.y+7)/8, # 11
-				Vector2i(gp.x  , gp.y+7)/8  # 12
-				]
-				var already_electrified = false
-				# see if any nearby tiles are electric
-				for tile in tiles_to_check:
-					if tilemap.get_cell_source_id(2, tile) == 0:
-						if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
-							cra.get_node("AnimationPlayer").play("electric")
-							#print("T")
-							already_electrified = true
-							break
-				# see if any nearby crates are electric
-				if !already_electrified:
-					for ray in get_tree().get_nodes_in_group("raycast"):
-						ray.enabled = true
-						ray.force_raycast_update()
-						var col = ray.get_collider()
-						if col:
-							if col.is_in_group("crate"):
-								if col.get_node("AnimationPlayer").get_current_animation() == "electric":
-									if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
-										cra.get_node("AnimationPlayer").play("electric")
-										#print("C")
-										break
+	var crates = get_tree().get_nodes_in_group("crate")
+	for cra in crates:
+		if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
+			var gp = cra.get_global_transform().origin
+			var tiles_to_check = [
+			Vector2i(gp.x+6, gp.y+6)/8, # 1
+			Vector2i(gp.x+6, gp.y+6)/8, # 2
+			Vector2i(gp.x+6, gp.y  )/8, # 3
+			Vector2i(gp.x+6, gp.y-4)/8, # 4
+			Vector2i(gp.x+6, gp.y-6)/8, # 5
+			Vector2i(gp.x  , gp.y-6)/8, # 6
+			Vector2i(gp.x-4, gp.y-6)/8, # 7
+			Vector2i(gp.x-6, gp.y-4)/8, # 8
+			Vector2i(gp.x-6, gp.y  )/8, # 9
+			Vector2i(gp.x-6, gp.y+4)/8, # 10
+			Vector2i(gp.x-4, gp.y+6)/8, # 11
+			Vector2i(gp.x  , gp.y+6)/8  # 12
+			]
+			var already_electrified = false
+			# see if any nearby tiles are electric
+			for tile in tiles_to_check:
+				if tilemap.get_cell_source_id(2, tile) == 0:
+					if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
+						cra.get_node("AnimationPlayer").play("electric")
+						#print("T")
+						already_electrified = true
+						#break
+			# see if any nearby crates are electric
+			if !already_electrified:
+				for ray in get_tree().get_nodes_in_group("raycast"):
+					ray.enabled = true
+					ray.force_raycast_update()
+					var col = ray.get_collider()
+					if col:
+						if col.is_in_group("crate"):
+							if col.get_node("AnimationPlayer").get_current_animation() == "electric":
+								if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
+									cra.get_node("AnimationPlayer").play("electric")
+									recursively_calc()
+									break
 	for cra in get_tree().get_nodes_in_group("crate"):
 		# if any are electric
 		if cra.get_node("AnimationPlayer").get_current_animation() == "electric":
@@ -128,7 +128,17 @@ func _physics_process(delta):
 	var gp = get_node("gold point").get_global_transform().origin
 	
 	# list of tiles above, below, left and right of the player
-	var tiles_to_change = [Vector2i(gp.x+4, gp.y+6)/8, Vector2i(gp.x+4, gp.y-4)/8, Vector2i(gp.x+4, gp.y)/8, Vector2i(gp.x-4, gp.y-4)/8, Vector2i(gp.x-4, gp.y+6)/8, Vector2i(gp.x-4, gp.y)/8, Vector2i(gp.x, gp.y)/8, Vector2i(gp.x, gp.y)/8]
+	var tiles_to_change = [
+	Vector2i(gp.x+4, gp.y+6)/8,
+	Vector2i(gp.x+4, gp.y-4)/8,
+	Vector2i(gp.x+4, gp.y)/8,
+	Vector2i(gp.x-4, gp.y-4)/8,
+	Vector2i(gp.x-4, gp.y+6)/8,
+	Vector2i(gp.x-4, gp.y-8)/8,
+	Vector2i(gp.x+4, gp.y-8)/8,
+	Vector2i(gp.x-4, gp.y)/8,
+	Vector2i(gp.x, gp.y)/8,
+	Vector2i(gp.x, gp.y)/8]
 	# go through all tiles listed above
 	for tile in tiles_to_change:
 		if tilemap.get_cell_source_id(0, tile) != 999 && tilemap.get_cell_source_id(0, tile) != 1:
@@ -159,7 +169,10 @@ func _physics_process(delta):
 	if not is_on_floor():
 		$AnimationPlayer.play("jumping")
 		velocity.y += GRAVITY * delta
-	elif Input.is_action_pressed("pull"): # if youre still pressing pull
+		
+		
+	# PULLING A CRATE
+	elif Input.is_action_pressed("pull"):
 		if Input.is_action_just_pressed("pull"):
 			get_node("RayCast2D").enabled = true
 			get_node("RayCast2D").force_raycast_update()
@@ -178,11 +191,18 @@ func _physics_process(delta):
 				$AnimationPlayer.play("idle push left")
 			elif direction == 0 && last_direction_pushed == false: #idle right
 				$AnimationPlayer.play("idle push right")
+
+
+
 	if !is_on_floor() || crate == null || !crate.is_in_group("crate") || (crate && Input.is_action_just_released("pull")):
 		if velocity.x != 0:
 			$AnimationPlayer.play("run")
 		if velocity.x == 0:
 			$AnimationPlayer.play("idle")
+	
+	
+	
+	# RELEASE A CRATE
 	if crate and Input.is_action_just_released("pull"):
 		crate.being_pulled = false
 		crate = null

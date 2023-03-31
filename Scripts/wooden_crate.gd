@@ -18,6 +18,8 @@ func _ready():
 	$AnimationPlayer.play("wood")
 
 func _physics_process(delta):
+	if midas.is_on_floor() && midas.is_colliding()
+	
 	velocity.x = 0
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -25,17 +27,17 @@ func _physics_process(delta):
 	if midas_on_left && direction > 0:
 		push_box(20)
 	elif midas_on_right && direction < 0:
-		push_box(20)
+		push_box(-20)
 	elif midas_on_left and being_pulled:
 		push_box(20)
 	elif midas_on_right and being_pulled:
-		push_box(20)
+		push_box(-20)
 	# if a crate on the left is pushing to the right
-	if crate_on_left && direction > 0:
+	if crate_on_left:# && direction > 0:
 		push_box(20)
 	# if a crate on the right is pushing to the left
-	if crate_on_right && direction < 0:
-		push_box(20)
+	if crate_on_right:# && direction < 0:
+		push_box(-20)
 	if !is_zero_approx(get_position_delta().x) && !get_node("gold push audio").playing:
 		get_node("gold push audio").playing = true
 	elif is_zero_approx(get_position_delta().x) && get_node("gold push audio").playing:
@@ -80,7 +82,7 @@ func _on_right_area_2d_body_exited(body):
 		crate_on_right = false
 
 func push_box(strength):
-	velocity.x = midas.direction * strength
+	velocity.x = strength
 
 func touch_box(body):
 	if body == midas:

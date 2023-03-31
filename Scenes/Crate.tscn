@@ -8,10 +8,10 @@
 size = Vector2(10, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ra3gk"]
-size = Vector2(1, 7.8)
+size = Vector2(1, 7.6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gcapi"]
-size = Vector2(1, 7.8)
+size = Vector2(1, 7.6)
 
 [sub_resource type="Animation" id="Animation_otjde"]
 resource_name = "electric"
@@ -126,7 +126,7 @@ target_position = Vector2(-6, 4)
 collision_mask = 6
 
 [node name="RayCast2D4" type="RayCast2D" parent="." groups=["raycast"]]
-target_position = Vector2(-6, 0)
+target_position = Vector2(-8, 0)
 collision_mask = 6
 
 [node name="RayCast2D5" type="RayCast2D" parent="." groups=["raycast"]]
@@ -138,7 +138,7 @@ target_position = Vector2(-4, -6)
 collision_mask = 6
 
 [node name="RayCast2D7" type="RayCast2D" parent="." groups=["raycast"]]
-target_position = Vector2(0, -6)
+target_position = Vector2(0, -8)
 collision_mask = 6
 
 [node name="RayCast2D8" type="RayCast2D" parent="." groups=["raycast"]]
@@ -150,7 +150,7 @@ target_position = Vector2(6, -4)
 collision_mask = 6
 
 [node name="RayCast2D10" type="RayCast2D" parent="." groups=["raycast"]]
-target_position = Vector2(6, 0)
+target_position = Vector2(8, 0)
 collision_mask = 6
 
 [node name="RayCast2D11" type="RayCast2D" parent="." groups=["raycast"]]
