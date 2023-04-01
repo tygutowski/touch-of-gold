@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://blesr3j2narb2"]
+[gd_scene load_steps=17 format=3 uid="uid://blesr3j2narb2"]
 
 [ext_resource type="Material" uid="uid://het7jrx0ji3i" path="res://Scenes/halftone.tres" id="1_7v33q"]
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="1_xotr1"]
@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://cgkccq6ok8pf4" path="res://Parallax/ruins bg.png" id="10_dmu2i"]
 [ext_resource type="Texture2D" uid="uid://bng3dut24e4k2" path="res://Parallax/ruins far.png" id="11_ayamj"]
 [ext_resource type="Texture2D" uid="uid://do223m5nqwvxj" path="res://Parallax/ruins mid.png" id="12_6dbok"]
+[ext_resource type="PackedScene" uid="uid://cp28prum6xgl6" path="res://Scenes/Scene Transitioner.tscn" id="13_lqm4u"]
 [ext_resource type="Texture2D" uid="uid://dx6sc2tmo50t2" path="res://Parallax/ruins close.png" id="13_nebel"]
+[ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="14_0wfhh"]
 
 [sub_resource type="Shader" id="Shader_ph847"]
 code = "shader_type canvas_item;
@@ -131,7 +133,7 @@ shader_parameter/color = Color(1, 0.72549, 1, 0.207843)
 shader_parameter/hdr = false
 shader_parameter/seed = 3.195
 
-[node name="Level" type="Node2D"]
+[node name="Level2-1" type="Node2D"]
 material = ExtResource("1_7v33q")
 
 [node name="Midas" parent="." instance=ExtResource("1_xotr1")]
@@ -206,3 +208,11 @@ rotation = -4.71238
 
 [node name="receiver" parent="." instance=ExtResource("5_tsu0y")]
 position = Vector2(259, 121)
+
+[node name="Area2D" parent="." instance=ExtResource("13_lqm4u")]
+position = Vector2(331, 50)
+scale = Vector2(1.06049, 1.60252)
+stage_id = 2
+level_id = 2
+
+[node name="UI" parent="." instance=ExtResource("14_0wfhh")]

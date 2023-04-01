@@ -15,6 +15,11 @@ var pushpulling_crate = false
 var pushpulling_speed = 25
 var time = 0
 
+func _ready():
+	if get_parent().name == "Level1-1" || get_parent().name == "Level1-2" || get_parent().name == "Level1-3" || get_parent().name == "Level1-4":
+		MusicPlayer.play_level1()
+	if get_parent().name == "Level2-1" || get_parent().name == "Level2-2" || get_parent().name == "Level2-3" || get_parent().name == "Level2-4":
+		MusicPlayer.play_level2()
 func recalculate_electricity():
 	# remove all linking electric tiles
 	var linkers = tilemap.get_used_cells_by_id(2, 0, Vector2i(0,1)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,2)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,3)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,4)) + tilemap.get_used_cells_by_id(2, 0, Vector2i(0,5))
@@ -74,17 +79,20 @@ func recursively_calc():
 			Vector2i(gp.x  , gp.y+6)/8  # 12
 			]
 			var already_electrified = false
-			# see if any nearby tiles are electric
+			# check all nearby tiles
 			for tile in tiles_to_check:
 				if tilemap.get_cell_source_id(2, tile) == 0:
 					if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
 						cra.get_node("AnimationPlayer").play("electric")
-						#print("T")
 						already_electrified = true
-						#break
+						break
 			# see if any nearby crates are electric
 			if !already_electrified:
-				for ray in get_tree().get_nodes_in_group("raycast"):
+				var ray_list = []
+				for item in cra.get_children():
+					if item.is_in_group("raycast"):
+						ray_list.append(item)
+				for ray in ray_list: 
 					ray.enabled = true
 					ray.force_raycast_update()
 					var col = ray.get_collider()
@@ -93,14 +101,16 @@ func recursively_calc():
 							if col.get_node("AnimationPlayer").get_current_animation() == "electric":
 								if cra.get_node("AnimationPlayer").get_current_animation() == "gold":
 									cra.get_node("AnimationPlayer").play("electric")
-									recursively_calc()
+									#recursively_calc()
 									break
+	# go through all crates
 	for cra in get_tree().get_nodes_in_group("crate"):
 		# if any are electric
 		if cra.get_node("AnimationPlayer").get_current_animation() == "electric":
 			var tile = cra.get_global_transform().origin / 8
-			# turn nearby cells into electric tiles
+			# go through all nearby tiles
 			for nearby in tilemap.get_surrounding_cells(tile):
+				# if the tile is gold and the tile is not electric
 				if tilemap.get_cell_source_id(0, nearby) == 1 && tilemap.get_cell_atlas_coords(2, nearby) == Vector2i(-1, -1): # strand
 					var data = tilemap.get_cell_tile_data(0, nearby)
 					if data:
@@ -120,6 +130,7 @@ func recursively_calc():
 	if any_more:
 		recursively_calc()
 func _physics_process(delta):
+	var sound_should_play = false
 	time += delta
 	if time > 0.25:
 		time = 0
@@ -170,9 +181,17 @@ func _physics_process(delta):
 		$AnimationPlayer.play("jumping")
 		velocity.y += GRAVITY * delta
 		
-		
+	$RayCast2D.enabled = true
+	$RayCast2D.force_raycast_update()
+	if is_on_wall() and $RayCast2D.is_colliding:
+		var collider = $RayCast2D.get_collider()
+		if collider and collider.is_in_group("crate"):
+			sound_should_play = push_box(collider, 25)
+	
 	# PULLING A CRATE
-	elif Input.is_action_pressed("pull"):
+	
+	
+	if is_on_floor() and Input.is_action_pressed("pull"):
 		if Input.is_action_just_pressed("pull"):
 			get_node("RayCast2D").enabled = true
 			get_node("RayCast2D").force_raycast_update()
@@ -182,7 +201,7 @@ func _physics_process(delta):
 
 		last_direction_pushed = midas.get_node("Sprite2D").flip_h
 		if crate && crate.is_in_group("crate"):
-			velocity.x = 20 * direction
+			sound_should_play = push_box(crate, 25)
 			if direction != 0 && last_direction_pushed == true: #pushing left
 				$AnimationPlayer.play("push left")
 			elif direction != 0 && last_direction_pushed == false: #pushing right
@@ -202,9 +221,19 @@ func _physics_process(delta):
 	
 	
 	
-	# RELEASE A CRATE
+	# RELEASE A CRATE~
 	if crate and Input.is_action_just_released("pull"):
 		crate.being_pulled = false
 		crate = null
 	get_node("RayCast2D").enabled = false
+	if !sound_should_play:
+		get_node("metal").playing = false
 	move_and_slide()
+
+func push_box(crate, strength):
+	if direction:
+		if !get_node("metal").playing:
+			get_node("metal").playing = true
+		crate.velocity.x = strength * direction
+		velocity.x = (strength - 5) * direction
+	return (direction != 0)

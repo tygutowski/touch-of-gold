@@ -11,7 +11,6 @@ func _process(_delta):
 	if Input.is_action_just_pressed("toggle pause"):
 		tog()
 func _on_resume_pressed():
-	pause_menu.visible = !pause_menu.visible
 	tog()
 func _on_restart_pressed():
 	get_tree().reload_current_scene()
@@ -38,11 +37,14 @@ func _on_music_slider_value_changed(value):
 	Stats.music_volume = value
 func set_music_to(value):
 	for node in get_tree().get_nodes_in_group("music"):
-		node.volume_db = linear_to_db(value/8)
+		node.volume_db = linear_to_db(value/10)
 
 func set_sfx_to(value):
 	for node in get_tree().get_nodes_in_group("sfx"):
-		node.volume_db = linear_to_db(value/8)
+		if node.name == "metal":
+			node.volume_db = linear_to_db(value)
+		else:
+			node.volume_db = linear_to_db(value*4)
 
 func _on_music_slider_ready():
 	set_music_to(Stats.music_volume)

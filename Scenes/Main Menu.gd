@@ -6,24 +6,27 @@ func _process(_delta):
 		$"stage select".visible = false
 		$"options".visible = false
 		$"controls".visible = false
+
 func _ready():
+	MusicPlayer.play_level1()
 	for node in get_tree().get_nodes_in_group("sfx slider"):
 		node.value = Stats.sfx_volume
 	for node in get_tree().get_nodes_in_group("music slider"):
 		node.value = Stats.music_volume
 	set_music_to(Stats.music_volume)
 	set_sfx_to(Stats.sfx_volume)
+
 func _on_music_slider_value_changed(value):
 	set_music_to(value)
 	Stats.music_volume = value
 
 func set_music_to(value):
 	for node in get_tree().get_nodes_in_group("music"):
-		node.volume_db = linear_to_db(value/8)
+		node.volume_db = linear_to_db(value/7)
 
 func set_sfx_to(value):
 	for node in get_tree().get_nodes_in_group("sfx"):
-		node.volume_db = linear_to_db(value/8)
+		node.volume_db = linear_to_db(value*4)
 
 func _on_exit_to_desktop_pressed():
 	get_tree().quit()

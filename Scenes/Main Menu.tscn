@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ch28j8m53gs62"]
+[gd_scene load_steps=36 format=3 uid="uid://ch28j8m53gs62"]
 
 [ext_resource type="Script" path="res://Scenes/Main Menu.gd" id="1_0d4x1"]
 [ext_resource type="Texture2D" uid="uid://44qgxmak7lki" path="res://UI/button-new-game-default.png" id="1_7seat"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://do2hxsvoiqkqa" path="res://Tilemaps/wasd_to_move.png" id="27_q05j2"]
 [ext_resource type="Texture2D" uid="uid://ete6xf1rtldm" path="res://Tilemaps/space_to_jump.png" id="28_ars2s"]
 [ext_resource type="Texture2D" uid="uid://u6sq8mko27ka" path="res://Tilemaps/c_to_pull.png" id="29_r6hki"]
+[ext_resource type="PackedScene" uid="uid://vyl5mvnxw416" path="res://Scenes/parallax_background.tscn" id="32_a7rpd"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_15ek7"]
 texture = ExtResource("15_jbywv")
@@ -139,6 +140,7 @@ texture_hover = ExtResource("6_xgpaq")
 stretch_mode = 3
 
 [node name="exit to desktop" type="TextureButton" parent="main menu/CenterContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 texture_normal = ExtResource("7_5c24k")
@@ -228,6 +230,7 @@ texture_hover = ExtResource("15_q3ojd")
 stretch_mode = 3
 
 [node name="library" type="TextureButton" parent="stage select/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 texture_normal = ExtResource("16_byc01")
@@ -235,6 +238,7 @@ texture_hover = ExtResource("17_rw5s1")
 stretch_mode = 3
 
 [node name="forge" type="TextureButton" parent="stage select/CenterContainer/MarginContainer/VBoxContainer/MarginContainer/CenterContainer/MarginContainer2/VBoxContainer"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 texture_normal = ExtResource("18_m0fd8")
@@ -476,11 +480,7 @@ texture_normal = ExtResource("19_lec1t")
 texture_hover = ExtResource("20_jtdhh")
 stretch_mode = 3
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-color = Color(0.188235, 0.219608, 0.262745, 1)
+[node name="ParallaxBackground" parent="." instance=ExtResource("32_a7rpd")]
 
 [connection signal="pressed" from="main menu/CenterContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer2/VBoxContainer/new game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="main menu/CenterContainer/MarginContainer/CenterContainer/VBoxContainer/MarginContainer2/VBoxContainer/stage select" to="." method="_on_stage_select_pressed"]

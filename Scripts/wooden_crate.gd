@@ -18,68 +18,17 @@ func _ready():
 	$AnimationPlayer.play("wood")
 
 func _physics_process(delta):
-	if midas.is_on_floor() && midas.is_colliding()
-	
-	velocity.x = 0
+	velocity.x = move_toward(velocity.x, 0, 5)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	var direction = midas.direction
-	if midas_on_left && direction > 0:
-		push_box(20)
-	elif midas_on_right && direction < 0:
-		push_box(-20)
-	elif midas_on_left and being_pulled:
-		push_box(20)
-	elif midas_on_right and being_pulled:
-		push_box(-20)
-	# if a crate on the left is pushing to the right
-	if crate_on_left:# && direction > 0:
-		push_box(20)
-	# if a crate on the right is pushing to the left
-	if crate_on_right:# && direction < 0:
-		push_box(-20)
-	if !is_zero_approx(get_position_delta().x) && !get_node("gold push audio").playing:
-		get_node("gold push audio").playing = true
-	elif is_zero_approx(get_position_delta().x) && get_node("gold push audio").playing:
-		get_node("gold push audio").playing = false
-
+	var collision = get_last_slide_collision()
+	if collision:
+		var collider = collision.get_collider()
+		if collider.is_in_group("crate"):
+			if ((collision.get_normal().x < -0.05) or (collision.get_normal().x > 0.05)) && collision.get_normal().y <= 0:
+				collider.velocity.x = midas.direction * 25
 	move_and_slide()
-
-func _on_left_area_2d_body_entered(body):
-	if body == midas:
-		midas_on_left = true
-		if midas.crate == self:
-			midas.next_to_crate = true
-	if body.is_in_group("crate") && body != self:
-		crate_on_left = true
-
-func _on_right_area_2d_body_entered(body):
-	if body == midas:
-		midas_on_right = true
-		if midas.crate == self:
-			midas.next_to_crate = true
-	if body.is_in_group("crate") && body != self:
-		crate_on_right = true
-
-func _on_left_area_2d_body_exited(body):
-	if body == midas:
-		midas_on_left = false
-		if midas.crate == self:
-			midas.next_to_crate = false
-			being_pulled = false
-			midas.crate = null
-	if body.is_in_group("crate") && body != self:
-		crate_on_left = false
-
-func _on_right_area_2d_body_exited(body):
-	if body == midas:
-		midas_on_right = false
-		if midas.crate == self:
-			midas.next_to_crate = false
-			being_pulled = false
-			midas.crate = null
-	if body.is_in_group("crate") && body != self:
-		crate_on_right = false
 
 func push_box(strength):
 	velocity.x = strength

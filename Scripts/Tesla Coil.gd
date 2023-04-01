@@ -1,6 +1,7 @@
 extends Node2D
 
-@onready var root_tile = Vector2i(get_global_transform().origin.x, get_global_transform().origin.y + 8) / 8 
+@onready var plug = get_node("Node2D")
+@onready var root_tile = Vector2i(plug.get_global_transform().origin.x, plug.get_global_transform().origin.y) / 8 
 @onready var tilemap = get_node("../TileMap")
 @export var id = 0
 

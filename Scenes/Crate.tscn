@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dup7ropid75ax"]
+[gd_scene load_steps=9 format=3 uid="uid://dup7ropid75ax"]
 
 [ext_resource type="Script" path="res://Scripts/wooden_crate.gd" id="1_8cw2s"]
 [ext_resource type="Texture2D" uid="uid://bxoxdc8odi440" path="res://Sprites/crate-spritesheet.png" id="2_fw1wr"]
@@ -6,12 +6,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p3lh"]
 size = Vector2(10, 9)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ra3gk"]
-size = Vector2(1, 7.6)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gcapi"]
-size = Vector2(1, 7.6)
 
 [sub_resource type="Animation" id="Animation_otjde"]
 resource_name = "electric"
@@ -89,18 +83,6 @@ hframes = 10
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TouchArea2D"]
 shape = SubResource("RectangleShape2D_1p3lh")
 
-[node name="LeftArea2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea2D"]
-position = Vector2(-4.5, 0)
-shape = SubResource("RectangleShape2D_ra3gk")
-
-[node name="RightArea2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArea2D"]
-position = Vector2(4.5, 0)
-shape = SubResource("RectangleShape2D_gcapi")
-
 [node name="gold push audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_2rq40")
 volume_db = -20.0
@@ -162,7 +144,3 @@ target_position = Vector2(4, 8)
 collision_mask = 6
 
 [connection signal="body_entered" from="TouchArea2D" to="." method="touch_box"]
-[connection signal="body_entered" from="LeftArea2D" to="." method="_on_left_area_2d_body_entered"]
-[connection signal="body_exited" from="LeftArea2D" to="." method="_on_left_area_2d_body_exited"]
-[connection signal="body_entered" from="RightArea2D" to="." method="_on_right_area_2d_body_entered"]
-[connection signal="body_exited" from="RightArea2D" to="." method="_on_right_area_2d_body_exited"]

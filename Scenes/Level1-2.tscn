@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bc1cbecpyjiks"]
+[gd_scene load_steps=13 format=3 uid="uid://bc1cbecpyjiks"]
 
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="1_cm30c"]
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="2_fcxa3"]
 [ext_resource type="PackedScene" uid="uid://b22wkfawh2f4e" path="res://tile_map.tscn" id="4_850hb"]
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="5_ooa16"]
+[ext_resource type="PackedScene" uid="uid://vyl5mvnxw416" path="res://Scenes/parallax_background.tscn" id="7_fvtvr"]
 [ext_resource type="PackedScene" uid="uid://cp28prum6xgl6" path="res://Scenes/Scene Transitioner.tscn" id="8_0umwb"]
 [ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/Crate.tscn" id="9_ih3cd"]
 
@@ -259,7 +260,7 @@ shader_parameter/color = Color(1, 0.952941, 0.811765, 0.294118)
 shader_parameter/hdr = false
 shader_parameter/seed = 111.0
 
-[node name="Level" type="Node2D"]
+[node name="Level1-2" type="Node2D"]
 
 [node name="UI" parent="." instance=ExtResource("1_cm30c")]
 
@@ -304,3 +305,5 @@ position = Vector2(59, 122)
 
 [node name="CharacterBody2D3" parent="." instance=ExtResource("9_ih3cd")]
 position = Vector2(64, 131)
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("7_fvtvr")]
