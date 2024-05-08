@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt1em3tm8wp6t"]
+
+[ext_resource type="Texture2D" uid="uid://bmwl5sudjsfc2" path="res://Sprites/battery.png" id="1_q23wt"]
+[ext_resource type="Script" path="res://Battery.gd" id="2_445tf"]
+
+[node name="Battery" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_q23wt")
+centered = false
+script = ExtResource("2_445tf")

@@ -6,10 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="4_yn5hl"]
 [ext_resource type="PackedScene" uid="uid://cp28prum6xgl6" path="res://Scenes/Scene Transitioner.tscn" id="5_vdnoh"]
 [ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/Crate.tscn" id="6_8v4q3"]
-[ext_resource type="Texture2D" uid="uid://cgkccq6ok8pf4" path="res://Parallax/ruins bg.png" id="7_l4mj0"]
-[ext_resource type="Texture2D" uid="uid://bng3dut24e4k2" path="res://Parallax/ruins far.png" id="8_mru0j"]
-[ext_resource type="Texture2D" uid="uid://do223m5nqwvxj" path="res://Parallax/ruins mid.png" id="9_gxbrd"]
-[ext_resource type="Texture2D" uid="uid://dx6sc2tmo50t2" path="res://Parallax/ruins close.png" id="10_8ueqm"]
+[ext_resource type="Texture2D" uid="uid://cgkccq6ok8pf4" path="res://Levels/Parallax/ruins bg.png" id="7_l4mj0"]
+[ext_resource type="Texture2D" uid="uid://bng3dut24e4k2" path="res://Levels/Parallax/ruins far.png" id="8_mru0j"]
+[ext_resource type="Texture2D" uid="uid://do223m5nqwvxj" path="res://Levels/Parallax/ruins mid.png" id="9_gxbrd"]
+[ext_resource type="Texture2D" uid="uid://dx6sc2tmo50t2" path="res://Levels/Parallax/ruins close.png" id="10_8ueqm"]
 
 [sub_resource type="Shader" id="Shader_ujdux"]
 code = "shader_type canvas_item;

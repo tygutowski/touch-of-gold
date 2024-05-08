@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://vyl5mvnxw416"]
 
-[ext_resource type="Texture2D" uid="uid://nvk3hbg687vi" path="res://Parallax/mountains bg.png" id="1_exdtx"]
-[ext_resource type="Texture2D" uid="uid://ck866cc32gh8" path="res://Parallax/mountains far.png" id="2_a447o"]
-[ext_resource type="Texture2D" uid="uid://op7njqnruhhu" path="res://Parallax/mountains mid.png" id="3_fwxql"]
-[ext_resource type="Texture2D" uid="uid://cskwite4rvc6n" path="res://Parallax/mountains close.png" id="4_un82o"]
+[ext_resource type="Texture2D" uid="uid://nvk3hbg687vi" path="res://Levels/Parallax/mountains bg.png" id="1_exdtx"]
+[ext_resource type="Texture2D" uid="uid://ck866cc32gh8" path="res://Levels/Parallax/mountains far.png" id="2_a447o"]
+[ext_resource type="Texture2D" uid="uid://op7njqnruhhu" path="res://Levels/Parallax/mountains mid.png" id="3_fwxql"]
+[ext_resource type="Texture2D" uid="uid://cskwite4rvc6n" path="res://Levels/Parallax/mountains close.png" id="4_un82o"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 

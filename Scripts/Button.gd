@@ -33,8 +33,6 @@ func pop(item):
 
 func power_on():
 	tilemap.set_cell(2, root_tile, 0, Vector2(0,0))
-	midas.recalculate_electricity()
 
 func power_off():
 	tilemap.set_cell(2, root_tile, -1)
-	midas.recalculate_electricity()
