@@ -7,4 +7,7 @@ var adjacents = [
 	Vector2i(-1,  0)
 ]
 
+var height = 100
+var width = 100
+
 var midas = null
