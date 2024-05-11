@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
-@onready var tilemap : TileMap = get_node("../TileMap")
-@onready var midas = get_node("../Midas")
+@onready var tilemap : TileMap = get_tree().get_first_node_in_group("tilemap")
 
 const SPEED = 75.0
 const JUMP_VELOCITY = -160.0
@@ -21,17 +20,14 @@ var nearby_tiles = [
 	Vector2i(-1,1)
 ]
 
-func _ready():
-	Global.midas = self
-
 func _physics_process(delta):
 	var midas_global_position = global_position.floor()
 	var midas_tile = tilemap.local_to_map(midas_global_position)
 	for offset in nearby_tiles:
 		var tile = midas_tile + offset
-		for i in [0, 1]:
-			var tile_atlas = tilemap.get_cell_atlas_coords(i, tile)
-			tilemap.set_cell(i, tile, 1, tile_atlas) # fg
+		for layer in [0, 1]:
+			var tile_atlas = tilemap.get_cell_atlas_coords(layer, tile)
+			ElectricityManager.turn_tile_to_gold(layer, tile, tile_atlas)
 		# for all conductive crates in the world
 		var crate = ElectricityManager.find_crate_near(tile)
 		if crate != null:
@@ -45,14 +41,10 @@ func _physics_process(delta):
 		else:
 			var tile_atlas = tilemap.get_cell_atlas_coords(0, tile_pos)
 			tilemap.set_cell(0, tile_pos, 1, tile_atlas)
-		ElectricityManager.update_conducting_list()
-		ElectricityManager.transmit()
 	elif Input.is_action_pressed("rclick"):
 		var mouse_pos = get_global_mouse_position()
 		var tile_pos = tilemap.local_to_map(mouse_pos)
 		tilemap.set_cell(0, tile_pos, -1)
-		ElectricityManager.update_conducting_list()
-		ElectricityManager.transmit()
 	
 	direction = Input.get_action_strength("run right") - Input.get_action_strength("run left")
 	velocity.x = direction * SPEED

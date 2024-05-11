@@ -3,4 +3,3 @@ extends Sprite2D
 
 func _ready():
 	ElectricityManager.battery_list.append(self)
-	ElectricityManager.transmit()
