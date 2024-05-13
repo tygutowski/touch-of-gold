@@ -17,7 +17,6 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 [autoload]
 
 Stats="*res://Scripts/stats.gd"
-MusicPlayer="res://Scenes/MusicPlayer.tscn"
 ElectricityManager="*res://ElectricityManager.gd"
 Global="*res://Global.gd"
 

@@ -24,7 +24,7 @@ func _ready():
 	# get all of the tiles
 	initialize_conducting_list()
 
-func _process(delta):
+func _process(_delta):
 	# clear the electric tiles
 	clear_electric_tiles()
 	# redraw the electric tiles
@@ -34,9 +34,11 @@ func _process(delta):
 	#update_particles()
 	pass
 
-func turn_tile_to_gold(layer, coordinate, atlas):
-	tilemap.set_cell(layer, coordinate, 1, atlas)
-	conducting_list[coordinate.x][coordinate.y] = 1
+func turn_tile_to_gold(layer, coordinate):
+	var atlas = tilemap.get_cell_atlas_coords(layer, coordinate)
+	if tilemap.get_cell_source_id(0, coordinate) != -1: # if its not an empty tile
+		tilemap.set_cell(layer, coordinate, 1, atlas)
+		conducting_list[coordinate.x][coordinate.y] = 1
 
 func initialize_conducting_list():
 	# fills the conductive tilemap with empty data
@@ -102,8 +104,7 @@ func conduct_in_dir(tile_coordinate, offset : Vector2i):
 	
 func conduct_in_all_dirs(tile_coordinate):
 	for tile_offset in Global.adjacents:
-		var offset_tile_coordinate = tile_offset + tile_coordinate
-		conduct(offset_tile_coordinate)
+		conduct_in_dir(tile_coordinate, tile_offset)
 
 func electrify_tile(tile_coordinate):
 	var tile_atlas = tilemap.get_cell_atlas_coords(0, tile_coordinate)

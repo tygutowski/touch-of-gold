@@ -21,13 +21,14 @@ var nearby_tiles = [
 ]
 
 func _physics_process(delta):
+	check_crates()
+	
 	var midas_global_position = global_position.floor()
 	var midas_tile = tilemap.local_to_map(midas_global_position)
 	for offset in nearby_tiles:
 		var tile = midas_tile + offset
-		for layer in [0, 1]:
-			var tile_atlas = tilemap.get_cell_atlas_coords(layer, tile)
-			ElectricityManager.turn_tile_to_gold(layer, tile, tile_atlas)
+		for layer in [0]:
+			ElectricityManager.turn_tile_to_gold(layer, tile)
 		# for all conductive crates in the world
 		var crate = ElectricityManager.find_crate_near(tile)
 		if crate != null:
@@ -37,10 +38,7 @@ func _physics_process(delta):
 		var mouse_pos = get_global_mouse_position()
 		var tile_pos = tilemap.local_to_map(mouse_pos)
 		if tilemap.get_cell_source_id(0, tile_pos) == -1:
-			tilemap.set_cell(0, tile_pos, 1, Vector2i(10, 1))
-		else:
-			var tile_atlas = tilemap.get_cell_atlas_coords(0, tile_pos)
-			tilemap.set_cell(0, tile_pos, 1, tile_atlas)
+			ElectricityManager.turn_tile_to_gold(0, tile_pos)
 	elif Input.is_action_pressed("rclick"):
 		var mouse_pos = get_global_mouse_position()
 		var tile_pos = tilemap.local_to_map(mouse_pos)
@@ -63,3 +61,6 @@ func _physics_process(delta):
 			$AnimationPlayer.play("idle")
 
 	move_and_slide()
+
+func check_crates():
+	pass

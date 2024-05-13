@@ -13,7 +13,6 @@ var is_conductive = false
 var is_conducting = false
 @onready var tilemap = get_tree().get_first_node_in_group("tilemap")
 
-
 var held = false
 
 var gravity = 500
