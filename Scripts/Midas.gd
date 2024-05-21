@@ -6,6 +6,8 @@ const SPEED = 75.0
 const JUMP_VELOCITY = -160.0
 const GRAVITY = 500.0
 
+@onready var push_raycast : RayCast2D = get_node("RayCast2D")
+
 var direction = 0
 
 var nearby_tiles = [
@@ -20,9 +22,14 @@ var nearby_tiles = [
 	Vector2i(-1,1)
 ]
 
+func push_crates():
+	push_raycast.force_raycast_update()
+	var collider = push_raycast.get_collider()
+	if (collider != null) and (collider.is_in_group("crate")):
+		collider.move(direction * SPEED)
+
 func _physics_process(delta):
-	check_crates()
-	
+	push_crates()
 	var midas_global_position = global_position.floor()
 	var midas_tile = tilemap.local_to_map(midas_global_position)
 	for offset in nearby_tiles:
@@ -45,6 +52,12 @@ func _physics_process(delta):
 		tilemap.set_cell(0, tile_pos, -1)
 	
 	direction = Input.get_action_strength("run right") - Input.get_action_strength("run left")
+	if direction > 0:
+		push_raycast.scale.x = 1
+		get_node("Sprite2D").flip_h = false
+	elif direction < 0:
+		push_raycast.scale.x = -1
+		get_node("Sprite2D").flip_h = true
 	velocity.x = direction * SPEED
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -61,6 +74,3 @@ func _physics_process(delta):
 			$AnimationPlayer.play("idle")
 
 	move_and_slide()
-
-func check_crates():
-	pass

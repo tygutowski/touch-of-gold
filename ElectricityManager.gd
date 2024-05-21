@@ -5,14 +5,10 @@ var battery_list = []
 var button_list = []
 
 var conducting_list : Array = []
-# -3 are empty tiles with horizontal particles
-# -2 are empty tiles with vertical particles
 # -1 are empty tiles
 #  0 are non-conductive tiles
 #  1 are conductive tiles
 #  2 are conducting tiles 
-#  3 are conductive crates
-#  4 are conducting crates
 
 var actively_conducting_list : Array = []
 
@@ -23,16 +19,30 @@ func _ready():
 	Global.update_tilemap_data()
 	# get all of the tiles
 	initialize_conducting_list()
+	set_crate_conductivity()
+
+func set_crate_conductivity():
+	for crate in crate_list:
+		stop_conducting_crate(crate)
+
+func start_conducting_crate(crate):
+	if crate.is_conductive:
+		crate.is_conducting = true
+		crate.get_node("ElectricOverlay").visible = true
+
+func stop_conducting_crate(crate):
+	crate.is_conducting = false
+	crate.get_node("ElectricOverlay").visible = false
 
 func _process(_delta):
 	# clear the electric tiles
 	clear_electric_tiles()
+	
 	# redraw the electric tiles
 	fill_electric_tiles()
 	
-	#update_conducting_list()
-	#update_particles()
-	pass
+	clear_electric_crates()
+	conduct_to_crates()
 
 func turn_tile_to_gold(layer, coordinate):
 	var atlas = tilemap.get_cell_atlas_coords(layer, coordinate)
@@ -57,17 +67,42 @@ func initialize_conducting_list():
 		else:
 			conducting_list[tile.x][tile.y] = 0
 
-func update_conducting_crates():
-	# for all conductive crates in the world
+func clear_electric_crates():
 	for crate in crate_list:
-		# get the center of the crate
-		var center = crate.global_position + Vector2(4, 4)
-		# if the crate is within the tile stated earlier
-		var tile_pos = tilemap.local_to_map(center)
-		# if the crate is conductive, and not already conducting
+		stop_conducting_crate(crate)
+
+func conduct_tiles_to_crates():
+	# check nearby conducting tiles
+	for crate in crate_list:
 		if crate.is_conductive:
-			conducting_list[tile_pos.x][tile_pos.y] = 3
-		
+			for corner in crate.corners:
+				var tile_coord = tilemap.local_to_map(corner.global_position)
+				# assert electricity only spreads in the map!
+				if (tile_coord.x > 0) and (tile_coord.x < Global.width) and (tile_coord.y > 0) and (tile_coord.y < Global.height):
+					if conducting_list[tile_coord.x][tile_coord.y] == 2:
+						start_conducting_crate(crate)
+
+func conduct_crates_to_crates():
+	for crate in crate_list:
+		# check to see if its conducting
+		if crate.is_conductive and crate.is_conducting:
+			# electrify all items in all directions
+			for direction in [
+			crate.things_above, 
+			crate.things_below, 
+			crate.things_left, 
+			crate.things_right
+			]:
+				for thing in direction:
+					# if the thing nearby is a conducting crate
+					if thing.is_in_group("crate"):
+						if thing.is_conductive and not thing.is_conducting:
+							start_conducting_crate(thing)
+
+func conduct_to_crates():
+	conduct_tiles_to_crates()
+	conduct_crates_to_crates()
+
 func find_crate_near(map_position):
 	for crate in crate_list:
 		# get the center of the crate
@@ -83,8 +118,6 @@ func clear_electric_tiles():
 		conducting_list[tile.x][tile.y] = 1
 		tilemap.set_cell(2, Vector2i(tile.x, tile.y), -1)
 	actively_conducting_list.clear()
-	for crate in crate_list:
-		crate.get_node("ElectricOverlay").visible = false
 
 func fill_electric_tiles():
 	# from each battery
@@ -121,14 +154,4 @@ func conduct(tile_coordinate):
 	# if it can conduct
 	if conductivity == 1:
 		electrify_tile(tile_coordinate)
-
-		conduct_in_all_dirs(tile_coordinate)
-		
-	# if its a conductive crate
-	elif conductivity == 3:
-		# enable conductivity
-		conducting_list[tile_coordinate.x][tile_coordinate.y] = 4
-		# continue conducting
-		var crate = find_crate_near(tile_coordinate)
-		crate.get_node("ElectricOverlay").visible = true
 		conduct_in_all_dirs(tile_coordinate)

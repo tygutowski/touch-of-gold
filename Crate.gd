@@ -9,6 +9,16 @@ var things_below = []
 var things_left = []
 var things_right = []
 
+var being_pushed = false
+
+@onready var midas = get_tree().get_first_node_in_group("midas")
+var midas_direction = 0
+# -1 left
+# 0 none
+# 1 right
+
+@onready var corners = get_node("Corners").get_children()
+
 var is_conductive = false
 var is_conducting = false
 @onready var tilemap = get_tree().get_first_node_in_group("tilemap")
@@ -45,23 +55,31 @@ func turn_to_steel(): #THIS ADDS MULTIPLE TIMES IF CONVERTING TO GOLD AND BACK
 
 func _physics_process(delta):
 	do_movement(delta)
-	check_collisions()
+	# if midas is nearby, push the crate
 
-func check_collisions():
-	pass
+func move(speed):
+	print(name + ": " + str(things_right))
+	print(name + ": " + str(velocity.x))
+	velocity.x = speed
+	#check_nearby_crates(speed)
 
 func do_movement(delta):
 	# decelerate
-	velocity.x = move_toward(velocity.x, 0, 5)
+	velocity.x = move_toward(velocity.x, 0, 30)
 	# fall downwards
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
 		velocity.y = 0
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if (collider != null) and (collider.is_in_group("crate")):
+			if abs(collider.velocity.x) > 0:
+				collider.move(velocity.x)
 	move_and_slide()
-
 func _on_above_area_2d_body_entered(body):
-	if body not in things_above:
+	if body != self and body not in things_above:
 		things_above.append(body)
 
 
@@ -70,25 +88,29 @@ func _on_above_area_2d_body_exited(body):
 
 
 func _on_left_area_2d_body_entered(body):
-	if body not in things_left:
+	if body != self and body not in things_left:
 		things_left.append(body)
-
+	if body.is_in_group("midas"):
+		midas_direction = -1
 
 func _on_left_area_2d_body_exited(body):
 	things_left.erase(body)
-
+	if body.is_in_group("midas"):
+		midas_direction = 0
 
 func _on_right_area_2d_body_entered(body):
-	if body not in things_right:
+	if body != self and body not in things_right:
 		things_right.append(body)
-
+	if body.is_in_group("midas"):
+		midas_direction = 1
 
 func _on_right_area_2d_body_exited(body):
 	things_right.erase(body)
-
+	if body.is_in_group("midas"):
+		midas_direction = 0
 
 func _on_below_area_2d_body_entered(body):
-	if body not in things_below:
+	if body != self and body not in things_below:
 		things_below.append(body)
 
 func _on_below_area_2d_body_exited(body):

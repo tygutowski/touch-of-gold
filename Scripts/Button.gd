@@ -7,6 +7,7 @@ var is_on = false
 @onready var root_tile = Vector2i(get_node("plug").get_global_transform().origin.x, get_node("plug").get_global_transform().origin.y) / 8
 @onready var tilemap : TileMap = get_tree().get_first_node_in_group("tilemap")
 @onready var midas = get_tree().get_first_node_in_group("midas")
+
 func _ready():
 	ElectricityManager.button_list.append(self)
 	
