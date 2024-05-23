@@ -22,14 +22,13 @@ var nearby_tiles = [
 	Vector2i(-1,1)
 ]
 
-func push_crates():
-	push_raycast.force_raycast_update()
-	var collider = push_raycast.get_collider()
-	if (collider != null) and (collider.is_in_group("crate")):
-		collider.move(direction * SPEED)
-
 func _physics_process(delta):
-	push_crates()
+	if Input.is_action_just_pressed("fullscreen"):
+		if get_window().get_mode() == Window.MODE_FULLSCREEN:
+			get_window().set_mode(Window.MODE_MAXIMIZED)
+		else:
+			get_window().set_mode(Window.MODE_FULLSCREEN)
+	
 	var midas_global_position = global_position.floor()
 	var midas_tile = tilemap.local_to_map(midas_global_position)
 	for offset in nearby_tiles:
@@ -73,4 +72,15 @@ func _physics_process(delta):
 		if velocity.x == 0:
 			$AnimationPlayer.play("idle")
 
-	move_and_slide()
+	if move_and_slide():
+		for i in get_slide_collision_count():
+			var col = get_slide_collision(i)
+			var collider = col.get_collider()
+			if collider.is_in_group("crate"):
+				push_crates_in_row(collider as Crate, Vector2(direction, 0))
+
+func push_crates_in_row(crate: Crate, direction: Vector2):
+	var crates_in_row = crate.get_all_crates_in_direction(direction)
+	var move_amount = direction.x * SPEED
+	for c in crates_in_row:
+		c.velocity.x = move_amount

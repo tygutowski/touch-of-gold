@@ -1,20 +1,20 @@
-[gd_scene load_steps=20 format=3 uid="uid://dup7ropid75ax"]
+[gd_scene load_steps=18 format=3 uid="uid://dup7ropid75ax"]
 
 [ext_resource type="Script" path="res://Crate.gd" id="1_qlx4k"]
 [ext_resource type="Texture2D" uid="uid://bxoxdc8odi440" path="res://Sprites/crate-spritesheet.png" id="2_fw1wr"]
 [ext_resource type="Texture2D" uid="uid://bq0qxtvvkvbsq" path="res://Tilemaps/electricity-tilemap.png" id="3_f8sry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p3lh"]
-size = Vector2(7.95, 1)
+size = Vector2(7.9, 0.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jts56"]
-size = Vector2(8, 1)
+size = Vector2(7.9, 0.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8qir5"]
-size = Vector2(1, 8)
+size = Vector2(0.2, 7.9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ul4gu"]
-size = Vector2(1, 8)
+size = Vector2(0.2, 7.9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwx5g"]
 atlas = ExtResource("3_f8sry")
@@ -80,48 +80,37 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x36f1"]
-size = Vector2(8, 7.71746)
+[sub_resource type="GDScript" id="GDScript_6q7h5"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_iedtk"]
-radius = 0.4
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_xw1ro"]
-radius = 0.4
-
-[node name="CharacterBody2D" type="CharacterBody2D" groups=["crate"]]
-process_priority = 3
-process_physics_priority = 3
-collision_priority = 3.0
-safe_margin = 0.001
+[node name="RigidBody2D" type="RigidBody2D"]
 script = ExtResource("1_qlx4k")
 
 [node name="AboveArea2D" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AboveArea2D"]
-position = Vector2(3.975, -0.5)
+position = Vector2(4, 0)
 shape = SubResource("RectangleShape2D_1p3lh")
 
 [node name="BelowArea2D" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BelowArea2D"]
-position = Vector2(4, 8.5)
+position = Vector2(4, 8)
 shape = SubResource("RectangleShape2D_jts56")
 
 [node name="LeftArea2D" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea2D"]
-position = Vector2(-0.5, 4)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_8qir5")
 
 [node name="RightArea2D" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightArea2D"]
-position = Vector2(8.5, 4)
+position = Vector2(8, 4)
 shape = SubResource("RectangleShape2D_ul4gu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -163,44 +152,22 @@ position = Vector2(9, 0)
 [node name="Corner8" type="Node2D" parent="Corners"]
 position = Vector2(8, -1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(4, 3.85873)
-shape = SubResource("RectangleShape2D_x36f1")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 0, 7.5, 0.5, 8, 7.5, 8, 8, 7.5, 8, 0)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(0.443172, 7.58912)
-shape = SubResource("CircleShape2D_iedtk")
+[node name="Crate" type="CharacterBody2D" parent="." groups=["crate"]]
+z_index = 2
+collision_layer = 7
+collision_mask = 7
+floor_stop_on_slope = false
+safe_margin = 0.001
+script = SubResource("GDScript_6q7h5")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
-position = Vector2(7.55255, 7.58912)
-shape = SubResource("CircleShape2D_xw1ro")
-
-[node name="VelocityLabel" type="Label" parent="."]
-offset_top = 4.0
-offset_right = 40.0
-offset_bottom = 27.0
-scale = Vector2(0.2, 0.2)
-theme_override_font_sizes/font_size = 0
-text = "0.0000000"
-horizontal_alignment = 1
-clip_text = true
-text_overrun_behavior = 1
-
-[node name="NumberLabel" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-scale = Vector2(0.2, 0.2)
-theme_override_font_sizes/font_size = 0
-text = "0"
-horizontal_alignment = 1
-clip_text = true
-text_overrun_behavior = 1
-
-[connection signal="body_entered" from="AboveArea2D" to="." method="_on_above_area_2d_body_entered"]
-[connection signal="body_exited" from="AboveArea2D" to="." method="_on_above_area_2d_body_exited"]
-[connection signal="body_entered" from="BelowArea2D" to="." method="_on_below_area_2d_body_entered"]
-[connection signal="body_exited" from="BelowArea2D" to="." method="_on_below_area_2d_body_exited"]
-[connection signal="body_entered" from="LeftArea2D" to="." method="_on_left_area_2d_body_entered"]
-[connection signal="body_exited" from="LeftArea2D" to="." method="_on_left_area_2d_body_exited"]
-[connection signal="body_entered" from="RightArea2D" to="." method="_on_right_area_2d_body_entered"]
-[connection signal="body_exited" from="RightArea2D" to="." method="_on_right_area_2d_body_exited"]
+[connection signal="body_entered" from="AboveArea2D" to="Crate" method="_on_above_area_2d_body_entered"]
+[connection signal="body_exited" from="AboveArea2D" to="Crate" method="_on_above_area_2d_body_exited"]
+[connection signal="body_entered" from="BelowArea2D" to="Crate" method="_on_below_area_2d_body_entered"]
+[connection signal="body_exited" from="BelowArea2D" to="Crate" method="_on_below_area_2d_body_exited"]
+[connection signal="body_entered" from="LeftArea2D" to="Crate" method="_on_left_area_2d_body_entered"]
+[connection signal="body_exited" from="LeftArea2D" to="Crate" method="_on_left_area_2d_body_exited"]
+[connection signal="body_entered" from="RightArea2D" to="Crate" method="_on_right_area_2d_body_entered"]
+[connection signal="body_exited" from="RightArea2D" to="Crate" method="_on_right_area_2d_body_exited"]
