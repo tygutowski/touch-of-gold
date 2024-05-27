@@ -31,9 +31,6 @@ func _on_back_pressed():
 	$"main menu".visible = true
 	$"stage select".visible = false
 
-func _on_stats_pressed():
-	pass
-
 func _on_controls_pressed():
 	$"main menu".visible = false
 	$"stage select".visible = false

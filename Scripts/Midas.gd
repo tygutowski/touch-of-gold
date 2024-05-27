@@ -5,7 +5,7 @@ extends CharacterBody2D
 const SPEED = 75.0
 const JUMP_VELOCITY = -160.0
 const GRAVITY = 500.0
-
+var is_pulling = false
 @onready var push_raycast : RayCast2D = get_node("RayCast2D")
 
 var direction = 0
@@ -22,7 +22,15 @@ var nearby_tiles = [
 	Vector2i(-1,1)
 ]
 
+func push_crates():
+	push_raycast.force_raycast_update()
+	if push_raycast.is_colliding():
+		var collider = push_raycast.get_collider()
+		if collider and collider.is_in_group("crate"):
+			collider.velocity.x = direction * SPEED * 0.9
+			collider.move_nearby_crates()
 func _physics_process(delta):
+	push_crates()
 	if Input.is_action_just_pressed("fullscreen"):
 		if get_window().get_mode() == Window.MODE_FULLSCREEN:
 			get_window().set_mode(Window.MODE_MAXIMIZED)
@@ -51,13 +59,18 @@ func _physics_process(delta):
 		tilemap.set_cell(0, tile_pos, -1)
 	
 	direction = Input.get_action_strength("run right") - Input.get_action_strength("run left")
-	if direction > 0:
-		push_raycast.scale.x = 1
-		get_node("Sprite2D").flip_h = false
-	elif direction < 0:
-		push_raycast.scale.x = -1
-		get_node("Sprite2D").flip_h = true
+	if not is_pulling:
+		if direction > 0:
+			push_raycast.scale.x = 1
+			get_node("Sprite2D").flip_h = false
+		elif direction < 0:
+			push_raycast.scale.x = -1
+			get_node("Sprite2D").flip_h = true
 	velocity.x = direction * SPEED
+	is_pulling = false
+	if Input.is_action_pressed("pull"):
+		velocity.x = direction * SPEED * 0.05
+		is_pulling = true
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -71,16 +84,5 @@ func _physics_process(delta):
 			$AnimationPlayer.play("run")
 		if velocity.x == 0:
 			$AnimationPlayer.play("idle")
-
-	if move_and_slide():
-		for i in get_slide_collision_count():
-			var col = get_slide_collision(i)
-			var collider = col.get_collider()
-			if collider.is_in_group("crate"):
-				push_crates_in_row(collider as Crate, Vector2(direction, 0))
-
-func push_crates_in_row(crate: Crate, direction: Vector2):
-	var crates_in_row = crate.get_all_crates_in_direction(direction)
-	var move_amount = direction.x * SPEED
-	for c in crates_in_row:
-		c.velocity.x = move_amount
+	
+	move_and_slide()

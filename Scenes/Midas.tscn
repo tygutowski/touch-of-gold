@@ -332,7 +332,11 @@ position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_8hngw")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(0, 4)
+target_position = Vector2(3, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(0, -3)
 target_position = Vector2(3, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
