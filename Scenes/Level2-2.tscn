@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://bng3dut24e4k2" path="res://Levels/Parallax/ruins far.png" id="10_1w50f"]
 [ext_resource type="Texture2D" uid="uid://do223m5nqwvxj" path="res://Levels/Parallax/ruins mid.png" id="11_akn8c"]
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="11_une8r"]
-[ext_resource type="PackedScene" uid="uid://ndeufnmr7eir" path="res://Scenes/Tesla Coil.tscn" id="11_w15xb"]
 [ext_resource type="Texture2D" uid="uid://dx6sc2tmo50t2" path="res://Levels/Parallax/ruins close.png" id="12_i1j2b"]
 [ext_resource type="PackedScene" uid="uid://cp28prum6xgl6" path="res://Scenes/Scene Transitioner.tscn" id="12_u5tp7"]
 
@@ -131,6 +130,9 @@ shader_parameter/color = Color(1, 0.901961, 0.65098, 0.631373)
 shader_parameter/hdr = false
 shader_parameter/seed = 3.195
 
+[sub_resource type="Resource" id="Resource_irh2a"]
+metadata/__load_path__ = "res://Scenes/Tesla Coil.tscn"
+
 [node name="Level2-2" type="Node2D"]
 
 [node name="UI" parent="." instance=ExtResource("11_une8r")]
@@ -212,7 +214,7 @@ texture_filter = 1
 texture = ExtResource("12_i1j2b")
 centered = false
 
-[node name="Node2D2" parent="." instance=ExtResource("11_w15xb")]
+[node name="Node2D2" parent="."]
 position = Vector2(59, 81)
 
 [node name="Area2D" parent="." instance=ExtResource("12_u5tp7")]

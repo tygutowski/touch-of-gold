@@ -1,10 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://h6647afbl1ld"]
 
-[ext_resource type="Script" path="res://Scenes/Long Gate.gd" id="1_vcpfm"]
+[ext_resource type="Script" uid="uid://ck8d7nb0e2wgd" path="res://Scenes/Long Gate.gd" id="1_vcpfm"]
 [ext_resource type="Texture2D" uid="uid://cldgl4e50af51" path="res://Sprites/long-gate.png" id="2_qwkyf"]
 
 [sub_resource type="Animation" id="Animation_igcyf"]
 resource_name = "go down"
+capture_included = true
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -20,6 +21,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_tdxp1"]
 resource_name = "go up"
+capture_included = true
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,8 +37,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8m8dn"]
 _data = {
-"go down": SubResource("Animation_igcyf"),
-"go up": SubResource("Animation_tdxp1")
+&"go down": SubResource("Animation_igcyf"),
+&"go up": SubResource("Animation_tdxp1")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q7grs"]

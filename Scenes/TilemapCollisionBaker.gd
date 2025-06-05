@@ -1,4 +1,3 @@
-@tool
 extends StaticBody2D
 
 ## This script pre-bakes collisions for square tilemaps, therefore optimizing code 

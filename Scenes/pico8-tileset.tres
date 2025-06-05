@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://myqlvmq0e7h7"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://kdib6x06ecvb"]
 
 [ext_resource type="Texture2D" uid="uid://cpip7c82hlvmi" path="res://Tilemaps/pico8-tilemap.png" id="1_n1ym1"]
 [ext_resource type="Texture2D" uid="uid://csjhkl3g57cxb" path="res://Tilemaps/pico8-gold-tilemap.png" id="2_eqxuo"]

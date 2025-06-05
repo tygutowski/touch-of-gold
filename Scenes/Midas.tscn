@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://dq2ovlb72j0hk"]
 
-[ext_resource type="Script" path="res://Scripts/Midas.gd" id="1_4htpr"]
+[ext_resource type="Script" uid="uid://ct7snswo6j87r" path="res://Scripts/Midas.gd" id="1_4htpr"]
 [ext_resource type="Texture2D" uid="uid://cymsghh0br2cv" path="res://Sprites/midas-animations.png" id="2_63sn7"]
 [ext_resource type="AudioStream" uid="uid://5rulse68icoa" path="res://SFX/left-footstep.wav" id="3_tvxu6"]
 [ext_resource type="AudioStream" uid="uid://bthq3tolfelhg" path="res://SFX/right-footstep.wav" id="4_v4ro6"]
@@ -305,15 +305,15 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fmsh3"]
 _data = {
-"idle": SubResource("Animation_in5dt"),
-"idle push left": SubResource("Animation_6fpmh"),
-"idle push right": SubResource("Animation_sfwf1"),
-"jumping": SubResource("Animation_8n3k8"),
-"push left": SubResource("Animation_p8t2q"),
-"push right": SubResource("Animation_8dxhm"),
-"run": SubResource("Animation_ghroa"),
-"turn left": SubResource("Animation_5imgr"),
-"turn right": SubResource("Animation_ygtfj")
+&"idle": SubResource("Animation_in5dt"),
+&"idle push left": SubResource("Animation_6fpmh"),
+&"idle push right": SubResource("Animation_sfwf1"),
+&"jumping": SubResource("Animation_8n3k8"),
+&"push left": SubResource("Animation_p8t2q"),
+&"push right": SubResource("Animation_8dxhm"),
+&"run": SubResource("Animation_ghroa"),
+&"turn left": SubResource("Animation_5imgr"),
+&"turn right": SubResource("Animation_ygtfj")
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["midas"]]
@@ -332,8 +332,8 @@ position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_8hngw")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(0, 4)
-target_position = Vector2(3, 0)
+position = Vector2(0, 2)
+target_position = Vector2(4, 0)
 
 [node name="RayCast2D2" type="RayCast2D" parent="."]
 position = Vector2(0, -3)
@@ -348,7 +348,7 @@ vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_fmsh3")
+&"": SubResource("AnimationLibrary_fmsh3")
 }
 
 [node name="gold point" type="Node2D" parent="."]

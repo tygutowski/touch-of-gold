@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dunawm3xnicsi"]
+[gd_scene load_steps=18 format=3 uid="uid://dunawm3xnicsi"]
 
 [ext_resource type="PackedScene" uid="uid://dq2ovlb72j0hk" path="res://Scenes/Midas.tscn" id="1_ksyab"]
 [ext_resource type="Texture2D" uid="uid://bbxgwjgcnwqn1" path="res://Sprites/shader.png" id="2_nxf5k"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://dbd8iwajbjh3r" path="res://Scenes/UI.tscn" id="8_b501e"]
 [ext_resource type="PackedScene" uid="uid://dup7ropid75ax" path="res://Scenes/Crate.tscn" id="9_oujxn"]
 [ext_resource type="PackedScene" uid="uid://doiheku4ffurc" path="res://Scenes/receiver.tscn" id="10_rp1m7"]
-[ext_resource type="PackedScene" uid="uid://ndeufnmr7eir" path="res://Scenes/Tesla Coil.tscn" id="11_g0ksk"]
 [ext_resource type="PackedScene" uid="uid://dgs0b6egrwal3" path="res://Scenes/Gate.tscn" id="12_k5uec"]
 [ext_resource type="PackedScene" uid="uid://6vvx7lqd6iam" path="res://Scenes/Button.tscn" id="13_agxg2"]
 [ext_resource type="PackedScene" uid="uid://cp28prum6xgl6" path="res://Scenes/Scene Transitioner.tscn" id="14_bkv6u"]
@@ -132,6 +131,12 @@ shader_parameter/ray2_intensity = 0.3
 shader_parameter/color = Color(1, 0.901961, 0.65098, 0.631373)
 shader_parameter/hdr = false
 shader_parameter/seed = 3.195
+
+[sub_resource type="Resource" id="Resource_vhta5"]
+metadata/__load_path__ = "res://Scenes/Tesla Coil.tscn"
+
+[sub_resource type="Resource" id="Resource_c70vu"]
+metadata/__load_path__ = "res://Scenes/Tesla Coil.tscn"
 
 [node name="Level2-4" type="Node2D"]
 
@@ -271,11 +276,11 @@ id = 3
 position = Vector2(279, 97)
 id = 6
 
-[node name="Node2D2" parent="." instance=ExtResource("11_g0ksk")]
+[node name="Node2D2" parent="."]
 position = Vector2(263, 128)
 rotation = 1.57079
 
-[node name="Node2D3" parent="." instance=ExtResource("11_g0ksk")]
+[node name="Node2D3" parent="."]
 position = Vector2(64, 129)
 rotation = -6.28318
 

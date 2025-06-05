@@ -1,43 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgs0b6egrwal3"]
+[gd_scene load_steps=6 format=3 uid="uid://dgs0b6egrwal3"]
 
-[ext_resource type="Script" path="res://Scenes/Gate.gd" id="1_poti2"]
+[ext_resource type="Script" uid="uid://b3gw1sidvgq0o" path="res://Scenes/Gate.gd" id="1_poti2"]
 [ext_resource type="Texture2D" uid="uid://ddinqek8y0uar" path="res://Sprites/gate.png" id="2_cjyec"]
-
-[sub_resource type="Animation" id="Animation_igcyf"]
-resource_name = "go down"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 2,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_tdxp1"]
-resource_name = "go up"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 2,
-"values": [Vector2(0, -14)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_8m8dn"]
-_data = {
-"go down": SubResource("Animation_igcyf"),
-"go up": SubResource("Animation_tdxp1")
-}
+[ext_resource type="Texture2D" uid="uid://ndsueuj6a2b3" path="res://color-identifier.png" id="3_qe3w3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q7grs"]
 size = Vector2(8, 16)
@@ -48,28 +13,40 @@ size = Vector2(10, 18)
 [node name="Gate anchor" type="Node2D" groups=["gate"]]
 z_index = -1
 script = ExtResource("1_poti2")
-color = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Gate")
-libraries = {
-"": SubResource("AnimationLibrary_8m8dn")
-}
 
 [node name="Gate" type="Node2D" parent="."]
+z_index = 5
+z_as_relative = false
+position = Vector2(4, -8)
 
 [node name="Sprite2D" type="Sprite2D" parent="Gate"]
+z_index = 5
+z_as_relative = false
 texture_filter = 1
 texture = ExtResource("2_cjyec")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Gate"]
+z_index = 5
+z_as_relative = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gate/StaticBody2D"]
+z_index = 5
+z_as_relative = false
 shape = SubResource("RectangleShape2D_q7grs")
 
 [node name="Area2D" type="Area2D" parent="Gate"]
+z_index = 5
+z_as_relative = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gate/Area2D"]
+z_index = 5
+z_as_relative = false
 shape = SubResource("RectangleShape2D_kilw6")
+
+[node name="ColorIdentifier" type="Sprite2D" parent="."]
+z_index = 5
+z_as_relative = false
+position = Vector2(4, 23)
+texture = ExtResource("3_qe3w3")
 
 [connection signal="body_entered" from="Gate/Area2D" to="." method="_on_area_2d_body_entered"]

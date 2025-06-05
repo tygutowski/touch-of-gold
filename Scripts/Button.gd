@@ -9,7 +9,7 @@ var is_on = false
 @onready var midas = get_tree().get_first_node_in_group("midas")
 
 func _ready():
-	ElectricityManager.button_list.append(self)
+	Global.get_tilemap_manager().button_list.append(self)
 	
 func _on_area_2d_body_entered(body):
 	if (body.is_in_group("midas") or body.is_in_group("crate")):

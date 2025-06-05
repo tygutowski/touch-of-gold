@@ -12,14 +12,23 @@ var conducting_list : Array = []
 
 var actively_conducting_list : Array = []
 
-@onready var tilemap : TileMap = get_tree().get_first_node_in_group("tilemap")
+@onready var electricity_map: TileMapLayer = get_node("electricity")
+@onready var foreground_map: TileMapLayer = get_node("foreground")
 
 func _ready():
-	# get tilemap width and height
-	Global.update_tilemap_data()
+	set_map_size()
 	# get all of the tiles
 	initialize_conducting_list()
 	set_crate_conductivity()
+
+func set_map_size():
+	var used = foreground_map.get_used_cells()
+	var max = Vector2i.ZERO
+	for cell in used:
+		max.x = max(cell.x, max.x)
+		max.y = max(cell.y, max.y)
+	Global.width = max.x
+	Global.height = max.y
 
 func set_crate_conductivity():
 	for crate in crate_list:
@@ -44,24 +53,24 @@ func _process(_delta):
 	clear_electric_crates()
 	conduct_to_crates()
 
-func turn_tile_to_gold(layer, coordinate):
-	var atlas = tilemap.get_cell_atlas_coords(layer, coordinate)
-	if tilemap.get_cell_source_id(0, coordinate) != -1: # if its not an empty tile
-		tilemap.set_cell(layer, coordinate, 1, atlas)
+func turn_tile_to_gold(coordinate):
+	var atlas = foreground_map.get_cell_atlas_coords(coordinate)
+	if foreground_map.get_cell_source_id(coordinate) != -1: # if its not an empty tile
+		foreground_map.set_cell(coordinate, 1, atlas)
 		conducting_list[coordinate.x][coordinate.y] = 1
 
 func initialize_conducting_list():
 	# fills the conductive tilemap with empty data
-	for x in range(Global.width):
+	for x in range(Global.width + 1):
 		var row := []
-		for y in range(Global.height):
+		for y in range(Global.height + 1):
 			row.append(-1)
 		conducting_list.append(row)
-		
+
 	# get all foreground cells
-	var tiles = tilemap.get_used_cells(0)
+	var tiles = foreground_map.get_used_cells()
 	for tile in tiles:
-		var tile_data = tilemap.get_cell_tile_data(0, tile)
+		var tile_data = foreground_map.get_cell_tile_data(tile)
 		if tile_data.get_custom_data('conductive'):
 			conducting_list[tile.x][tile.y] = 1
 		else:
@@ -76,7 +85,7 @@ func conduct_tiles_to_crates():
 	for crate in crate_list:
 		if crate.is_conductive:
 			for corner in crate.corners:
-				var tile_coord = tilemap.local_to_map(corner.global_position)
+				var tile_coord = electricity_map.local_to_map(corner.global_position)
 				# assert electricity only spreads in the map!
 				if (tile_coord.x > 0) and (tile_coord.x < Global.width) and (tile_coord.y > 0) and (tile_coord.y < Global.height):
 					if conducting_list[tile_coord.x][tile_coord.y] == 2:
@@ -108,7 +117,7 @@ func find_crate_near(map_position):
 		# get the center of the crate
 		var center = crate.global_position + Vector2(4, 4)
 		# if the crate is within the tile stated earlier
-		var tile_pos = tilemap.local_to_map(center)
+		var tile_pos = electricity_map.local_to_map(center)
 		# if the crate is conductive, and not already conducting
 		if map_position == tile_pos:
 			return crate
@@ -116,19 +125,19 @@ func find_crate_near(map_position):
 func clear_electric_tiles():
 	for tile in actively_conducting_list:
 		conducting_list[tile.x][tile.y] = 1
-		tilemap.set_cell(2, Vector2i(tile.x, tile.y), -1)
+		electricity_map.set_cell(Vector2i(tile.x, tile.y), -1)
 	actively_conducting_list.clear()
 
 func fill_electric_tiles():
 	# from each battery
 	for battery in battery_list:
 		# find its tilemap position
-		var battery_coordinate = tilemap.local_to_map(battery.global_position)
+		var battery_coordinate = electricity_map.local_to_map(battery.global_position)
 		# conduct from that position
 		conduct_in_all_dirs(battery_coordinate)
 	for button in button_list:
 		if button.is_on:
-			var button_coordinate = tilemap.local_to_map(button.global_position)
+			var button_coordinate = electricity_map.local_to_map(button.global_position)
 			# conduct from the tile below
 			conduct_in_dir(Vector2i(0, 1), button_coordinate)
 
@@ -140,9 +149,9 @@ func conduct_in_all_dirs(tile_coordinate):
 		conduct_in_dir(tile_coordinate, tile_offset)
 
 func electrify_tile(tile_coordinate):
-	var tile_atlas = tilemap.get_cell_atlas_coords(0, tile_coordinate)
+	var tile_atlas = foreground_map.get_cell_atlas_coords(tile_coordinate)
 	# enable electric layer
-	tilemap.set_cell(2, tile_coordinate, 2, tile_atlas)
+	electricity_map.set_cell(tile_coordinate, 2, tile_atlas)
 	# enable conductivity
 	actively_conducting_list.append(tile_coordinate)
 	conducting_list[tile_coordinate.x][tile_coordinate.y] = 2

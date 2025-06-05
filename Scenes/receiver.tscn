@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://doiheku4ffurc"]
+[gd_scene load_steps=5 format=3 uid="uid://doiheku4ffurc"]
 
 [ext_resource type="Texture2D" uid="uid://biearwgftwdlv" path="res://Sprites/receiver.png" id="1_05lre"]
-[ext_resource type="Script" path="res://Scenes/receiver.gd" id="1_mmxxc"]
+[ext_resource type="Script" uid="uid://cf1qth3ejlenj" path="res://Scenes/receiver.gd" id="1_mmxxc"]
+[ext_resource type="Texture2D" uid="uid://ndsueuj6a2b3" path="res://color-identifier.png" id="3_bd7ao"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kbjgj"]
 size = Vector2(9, 13)
@@ -11,14 +12,22 @@ script = ExtResource("1_mmxxc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+position = Vector2(0, 1)
 texture = ExtResource("1_05lre")
 
 [node name="power tile" type="Node2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_kbjgj")
+
+[node name="ColorIdentifier" type="Sprite2D" parent="."]
+z_index = 5
+z_as_relative = false
+position = Vector2(0, 14)
+texture = ExtResource("3_bd7ao")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
